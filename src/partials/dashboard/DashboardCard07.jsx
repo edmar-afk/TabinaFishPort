@@ -1,6 +1,6 @@
 import React from "react";
 import SentimentSatisfiedAltOutlinedIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import me from '../../images/me.jpg'
+import me from "../../images/me.jpg";
 function DashboardCard07() {
 	return (
 		<div className="col-span-full bg-white dark:bg-gray-800 shadow-sm rounded-xl">
@@ -34,18 +34,28 @@ function DashboardCard07() {
 							<tr>
 								<td className="p-2">
 									<div className="flex items-center">
-										<img src={me} className="w-10 rounded-full mr-2" alt="" />
-										<div className="text-gray-800 dark:text-gray-100">Edmar Jay Heolin</div>
+										<img
+											src={me}
+											className="w-10 rounded-full mr-2"
+											alt=""
+										/>
+										<div className="text-gray-800 dark:text-gray-100">Zoren Garcia Sano</div>
 									</div>
 								</td>
 								<td className="p-2">
-									<div className="text-center text-green-400"><SentimentSatisfiedAltOutlinedIcon/> Good</div>
+									<div className="text-center text-green-400">
+										<SentimentSatisfiedAltOutlinedIcon /> Good
+									</div>
 								</td>
 								<td className="p-2">
 									<div className="text-center text-orange-500">Oct. 22 2026</div>
 								</td>
 								<td className="p-2">
-									<a href="#" className="text-center text-blue-400">View</a>
+									<a
+										href="#"
+										className="text-center text-blue-400">
+										View
+									</a>
 								</td>
 							</tr>
 						</tbody>
