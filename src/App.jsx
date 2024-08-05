@@ -8,6 +8,7 @@ import "./charts/ChartjsConfig";
 // Import pages
 import Dashboard from "./pages/Dashboard";
 import FisherManList from "./pages/FisherManList";
+import Registration from "./pages/Registration";
 function App() {
 	const location = useLocation();
 
@@ -29,6 +30,11 @@ function App() {
 					exact
 					path="/fisherman-lists"
 					element={<FisherManList />}
+				/>
+				<Route
+					exact
+					path="/registration"
+					element={<Registration />}
 				/>
 			</Routes>
 		</>

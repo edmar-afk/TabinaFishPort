@@ -54,7 +54,7 @@ function Dashboard() {
 							<DashboardCard04 />
 
 							{/* Table Registered Fishermen */}
-							<DashboardCard07 />
+							<DashboardCard07 isListPage={false} />
 						</div>
 					</div>
 				</main>

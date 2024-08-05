@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import Sidebar from "../partials/Sidebar";
+import React, { useState } from "react";import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import DashboardCard07 from "../partials/fishermenLists/DashboardCard07";
+import Register from "../partials/registration/Register";
 
-function FisherManList() {
+function Registration() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
@@ -36,9 +35,9 @@ function FisherManList() {
 						</div>
 
 						{/* Cards */}
-						<div className="grid grid-cols-12 gap-6">
+						<div className="w-full">
 							{/* Table Registered Fishermen */}
-							<DashboardCard07 isListPage={true} />
+							<Register/>
 						</div>
 					</div>
 				</main>
@@ -47,4 +46,4 @@ function FisherManList() {
 	);
 }
 
-export default FisherManList;
+export default Registration;
