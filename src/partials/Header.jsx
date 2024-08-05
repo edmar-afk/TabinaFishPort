@@ -1,15 +1,9 @@
-import Help from '../components/DropdownHelp';
-import UserMenu from '../components/DropdownProfile';
-import ThemeToggle from '../components/ThemeToggle';
+import Help from "../components/DropdownHelp";
+import UserMenu from "../components/DropdownProfile";
+import ThemeToggle from "../components/ThemeToggle";
 
-function Header({
-  sidebarOpen,
-  setSidebarOpen,
-  variant = 'default',
-}) {
-
-
-  return (
+function Header({ sidebarOpen, setSidebarOpen, variant = "default", headerName }) {
+	return (
 		<header
 			className={`sticky top-0 before:absolute before:inset-0 before:backdrop-blur-md max-lg:before:bg-white/90 dark:max-lg:before:bg-gray-800/90 before:-z-10 z-30 ${
 				variant === "v2" || variant === "v3"
@@ -61,7 +55,7 @@ function Header({
 
 					{/* Header: Right side */}
 					<div className="flex items-center space-x-3">
-						<p className="text-gray-900 dark:text-white">Dashboard</p>
+						<p className="text-gray-900 dark:text-white">{headerName}</p>
 						<Help align="right" />
 						<ThemeToggle />
 						{/*  Divider */}

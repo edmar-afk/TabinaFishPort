@@ -7,7 +7,7 @@ import DashboardCard03 from "../partials/dashboard/DashboardCard03";
 import DashboardCard04 from "../partials/dashboard/DashboardCard04";
 import DashboardCard07 from "../partials/fishermenLists/DashboardCard07";
 
-function Dashboard() {
+function FisherManList() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
@@ -24,7 +24,7 @@ function Dashboard() {
 				<Header
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
-					headerName="Dashboard"
+					headerName="Fishermen"
 				/>
 
 				<main className="grow">
@@ -33,7 +33,7 @@ function Dashboard() {
 						<div className="sm:flex sm:justify-between sm:items-center mb-8">
 							{/* Left: Title */}
 							<div className="mb-4 sm:mb-0">
-								<h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Dashboard</h1>
+								<h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Lists of Fishermen</h1>
 							</div>
 
 							{/* Right: Actions */}
@@ -41,18 +41,6 @@ function Dashboard() {
 
 						{/* Cards */}
 						<div className="grid grid-cols-12 gap-6">
-							{/* Fishermen who registered */}
-							<DashboardCard01 />
-
-							{/* Fish caught today */}
-							<DashboardCard02 />
-
-							{/* Profit gained today */}
-							<DashboardCard03 />
-
-							{/* Bar chart Sales */}
-							<DashboardCard04 />
-
 							{/* Table Registered Fishermen */}
 							<DashboardCard07 />
 						</div>
@@ -63,4 +51,4 @@ function Dashboard() {
 	);
 }
 
-export default Dashboard;
+export default FisherManList;

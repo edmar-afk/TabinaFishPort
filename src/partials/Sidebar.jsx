@@ -119,7 +119,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									to={"/"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-											isActive ? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2" : "hover:text-gray-900 dark:hover:text-white"
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
 										}`
 									}>
 									<div className="flex items-center justify-between">
@@ -142,10 +144,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 								}`}>
 								<NavLink
 									end
-									to={"/fishermen"}
+									to={"/fisherman-lists"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-											isActive ? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2" : "hover:text-gray-900 dark:hover:text-white"
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
 										}`
 									}>
 									<div className="flex items-center justify-between">
@@ -156,11 +160,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 											</span>
 										</div>
 										{/* Badge */}
-										<div className="flex flex-shrink-0 ml-2">
-											<span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded">
-												4
-											</span>
-										</div>
 									</div>
 								</NavLink>
 							</li>
@@ -176,7 +175,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									to={"/register"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-											isActive ? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2" : "hover:text-gray-900 dark:hover:text-white"
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
 										}`
 									}>
 									<div className="flex items-center justify-between">
@@ -187,11 +188,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 											</span>
 										</div>
 										{/* Badge */}
-										<div className="flex flex-shrink-0 ml-2">
-											<span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded">
-												4
-											</span>
-										</div>
 									</div>
 								</NavLink>
 							</li>
@@ -207,7 +203,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									to={"/report"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-											isActive ? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2" : "hover:text-gray-900 dark:hover:text-white"
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
 										}`
 									}>
 									<div className="flex items-center justify-between">
@@ -218,11 +216,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 											</span>
 										</div>
 										{/* Badge */}
-										<div className="flex flex-shrink-0 ml-2">
-											<span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded">
-												4
-											</span>
-										</div>
 									</div>
 								</NavLink>
 							</li>
