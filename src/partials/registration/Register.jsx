@@ -1,5 +1,4 @@
-import logo from "../../images/logo.png";
-import Warnings from "./Warnings";
+import logo from "../../images/logo.png";import Warnings from "./Warnings";
 function Register() {
 	return (
 		<>
@@ -215,7 +214,6 @@ function Register() {
 									placeholder=""
 								/>
 							</div>
-							
 						</div>
 
 						<div className="mt-6">

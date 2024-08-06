@@ -165,6 +165,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 							</li>
 
 							{/* Registration */}
+							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
+								<span
+									className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+									aria-hidden="true">
+									•••
+								</span>
+								<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Registration</span>
+							</h3>
 							<li
 								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
 									pathname.includes("registration") &&
@@ -183,8 +191,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									<div className="flex items-center justify-between">
 										<div className="grow flex items-center">
 											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
-											<span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-												Registration
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Vessel Registration
 											</span>
 										</div>
 										{/* Badge */}
@@ -192,6 +200,68 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 								</NavLink>
 							</li>
 
+							<li
+								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+									pathname.includes("motorboat-register") &&
+									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+								}`}>
+								<NavLink
+									end
+									to={"/motorboat-register"}
+									className={({ isActive }) =>
+										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
+										}`
+									}>
+									<div className="flex items-center justify-between">
+										<div className="grow flex items-center">
+											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Pump boat Registration
+											</span>
+										</div>
+										{/* Badge */}
+									</div>
+								</NavLink>
+							</li>
+
+							<li
+								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+									pathname.includes("motorboat-register") &&
+									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+								}`}>
+								<NavLink
+									end
+									to={"/motorboat-register"}
+									className={({ isActive }) =>
+										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
+										}`
+									}>
+									<div className="flex items-center justify-between">
+										<div className="grow flex items-center">
+											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Motorboat Registration
+											</span>
+										</div>
+										{/* Badge */}
+									</div>
+								</NavLink>
+							</li>
+
+							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
+								<span
+									className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+									aria-hidden="true">
+									•••
+								</span>
+								<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Calculation</span>
+							</h3>
 							{/* Fish Report */}
 							<li
 								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
@@ -212,7 +282,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 										<div className="grow flex items-center">
 											<SetMealSharpIcon className="text-gray-600 dark:text-white" />
 											<span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-												Fisheries Report
+												Fish Weigh-in
 											</span>
 										</div>
 										{/* Badge */}

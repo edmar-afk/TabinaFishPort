@@ -19,7 +19,7 @@ function Registration() {
 				<Header
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
-					headerName="Fishermen"
+					headerName="Vessel Registration"
 				/>
 
 				<main className="grow">
