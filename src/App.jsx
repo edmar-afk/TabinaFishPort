@@ -11,6 +11,7 @@ import FisherManList from "./pages/FisherManList";
 import Registration from "./pages/Registration";
 import FishingPermit from "./partials/registration/FishingPermit";
 import FishingPermitReg from './pages/FishingPermitReg';
+import WeightCalculate from "./pages/WeightCalculate";
 function App() {
 	const location = useLocation();
 
@@ -43,6 +44,11 @@ function App() {
 					exact
 					path="/fishing-permit"
 					element={<FishingPermitReg />}
+				/>
+				<Route
+					exact
+					path="/weigh-in"
+					element={<WeightCalculate />}
 				/>
 			</Routes>
 		</>

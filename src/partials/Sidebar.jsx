@@ -238,12 +238,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 							{/* Fish Report */}
 							<li
 								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-									pathname.includes("report") &&
+									pathname.includes("weigh-in") &&
 									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
 								}`}>
 								<NavLink
 									end
-									to={"/report"}
+									to={"/weigh-in"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
 											isActive
