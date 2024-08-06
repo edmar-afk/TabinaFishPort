@@ -18,7 +18,7 @@ function FishingPermit() {
 								<input
 									name="ownerName"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder="Enter name"
 								/>
 							</div>
@@ -29,7 +29,7 @@ function FishingPermit() {
 								<input
 									name="address"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -41,7 +41,7 @@ function FishingPermit() {
 								<input
 									name="homePort"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder="Enter name"
 								/>
 							</div>
@@ -50,7 +50,7 @@ function FishingPermit() {
 								<input
 									name="vesselName"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -62,7 +62,7 @@ function FishingPermit() {
 								<input
 									name="vesselType"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -70,8 +70,8 @@ function FishingPermit() {
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Color:</label>
 								<input
 									name="color"
-									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									type="text"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -80,7 +80,7 @@ function FishingPermit() {
 								<input
 									name="service"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -89,7 +89,7 @@ function FishingPermit() {
 								<input
 									name="vesselDescription"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -101,7 +101,7 @@ function FishingPermit() {
 								<input
 									name="lenght"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -110,7 +110,7 @@ function FishingPermit() {
 								<input
 									name="breadth"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -119,7 +119,7 @@ function FishingPermit() {
 								<input
 									name="depth"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -129,7 +129,7 @@ function FishingPermit() {
 								<input
 									name="gross"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -138,7 +138,7 @@ function FishingPermit() {
 								<input
 									name="tonnage"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -150,7 +150,7 @@ function FishingPermit() {
 								<input
 									name="egineMake"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -159,7 +159,7 @@ function FishingPermit() {
 								<input
 									name="serialNo"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -168,7 +168,7 @@ function FishingPermit() {
 								<input
 									name="horsePower"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -177,7 +177,7 @@ function FishingPermit() {
 								<input
 									name="cylinderNo"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -186,7 +186,7 @@ function FishingPermit() {
 								<input
 									name="engineNo"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -198,7 +198,7 @@ function FishingPermit() {
 								<input
 									name="crew"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -207,7 +207,7 @@ function FishingPermit() {
 								<input
 									name="coast"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -216,7 +216,7 @@ function FishingPermit() {
 								<input
 									name="mfvr"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -228,7 +228,7 @@ function FishingPermit() {
 								<input
 									name="orNo"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -236,8 +236,8 @@ function FishingPermit() {
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Date Issued:</label>
 								<input
 									name="dateIssued"
-									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									type="date"
+									className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -248,7 +248,7 @@ function FishingPermit() {
 								<input
 									name="Amount"
 									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
@@ -257,7 +257,7 @@ function FishingPermit() {
 								<input
 									name="fishingGear"
 									type="number"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 text-sm px-2 rounded-lg"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 								/>
 							</div>
