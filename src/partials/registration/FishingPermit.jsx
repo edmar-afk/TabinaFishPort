@@ -3,7 +3,7 @@ import Warnings from "./Warnings";
 function FishingPermit() {
 	return (
 		<>
-			<div className="flex flex-col justify-center items-center font-[sans-serif] p-1 sm:p-12 -mt-4">
+			<div className="flex flex-col justify-center items-center font-[sans-serif]">
 				<div className="flex flex-row flex-wrap sm:flex-nowrap items-center bg-white dark:bg-gray-800 w-full shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md">
 					<form className="sm:p-8 p-4 w-full">
 						<div className="mb-12">
