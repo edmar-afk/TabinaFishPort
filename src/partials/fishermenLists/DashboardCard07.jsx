@@ -4,7 +4,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import me from "../../images/me.jpg";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-
+import PhishingIcon from "@mui/icons-material/Phishing";
+import SailingIcon from "@mui/icons-material/Sailing";
 function DashboardCard07({isListPage}) {
 	console.log("isListPage:", isListPage);
 	return (
@@ -23,10 +24,10 @@ function DashboardCard07({isListPage}) {
 									<div className="font-semibold text-left">Name</div>
 								</th>
 								<th className="p-2">
-									<div className="font-semibold text-center">Boat Status</div>
+									<div className="font-semibold text-center">Vessel Registration</div>
 								</th>
 								<th className="p-2">
-									<div className="font-semibold text-center">Registration Expiry Date</div>
+									<div className="font-semibold text-center">Fishing Registration</div>
 								</th>
 								<th className="p-2">
 									<div className="font-semibold text-center">Action</div>
@@ -49,11 +50,13 @@ function DashboardCard07({isListPage}) {
 								</td>
 								<td className="p-2">
 									<div className="text-center text-green-400">
-										<SentimentSatisfiedAltOutlinedIcon /> Good
+										<SailingIcon /> Good
 									</div>
 								</td>
 								<td className="p-2">
-									<div className="text-center text-orange-500">Oct. 22 2026</div>
+									<div className="text-center text-orange-500">
+										<PhishingIcon /> Not Yet Issued
+									</div>
 								</td>
 								<td className="p-2 flex justify-evenly">
 									<a
@@ -95,7 +98,9 @@ function DashboardCard07({isListPage}) {
 									</div>
 								</td>
 								<td className="p-2">
-									<div className="text-center text-orange-500">July. 22 2024</div>
+									<div className="text-center text-green-500">
+										<PhishingIcon /> Good
+									</div>
 								</td>
 								<td className="p-2 flex justify-evenly">
 									<a
