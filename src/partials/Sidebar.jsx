@@ -202,12 +202,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 
 							<li
 								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-									pathname.includes("motorboat-register") &&
+									pathname.includes("fishing-permit") &&
 									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
 								}`}>
 								<NavLink
 									end
-									to={"/motorboat-register"}
+									to={"/fishing-permit"}
 									className={({ isActive }) =>
 										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
 											isActive
@@ -219,34 +219,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 										<div className="grow flex items-center">
 											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
 											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-												Pump boat Registration
-											</span>
-										</div>
-										{/* Badge */}
-									</div>
-								</NavLink>
-							</li>
-
-							<li
-								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-									pathname.includes("motorboat-register") &&
-									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-								}`}>
-								<NavLink
-									end
-									to={"/motorboat-register"}
-									className={({ isActive }) =>
-										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-											isActive
-												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
-												: "hover:text-gray-900 dark:hover:text-white"
-										}`
-									}>
-									<div className="flex items-center justify-between">
-										<div className="grow flex items-center">
-											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
-											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-												Motorboat Registration
+												Fishing Permit
 											</span>
 										</div>
 										{/* Badge */}
