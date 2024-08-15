@@ -1,10 +1,24 @@
-import React, { useState } from "react";import Sidebar from "../partials/Sidebar";
+import { useState, useEffect } from "react";import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import Register from "../partials/registration/Register";
 import WeighIn from "../partials/calculate/WeighIn";
+import api from "../assets/api";
 
 function WeightCalculate() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [fishTypes, setFishTypes] = useState([]);
+
+	useEffect(() => {
+		const fetchFishTypes = async () => {
+			try {
+				const response = await api.get("/api/fishtypes/list/");
+				const data = Array.isArray(response.data) ? response.data : [];
+				setFishTypes(data);
+			} catch (error) {
+				console.error("Failed to load fish types.", error);
+			}
+		};
+		fetchFishTypes();
+	}, []);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -35,8 +49,8 @@ function WeightCalculate() {
 						</div>
 						{/* Cards */}
 						<div className="w-full">
-							{/* Table Registered Fishermen */}
-							<WeighIn />
+							{/* Pass the fishTypes to the WeighIn component */}
+							<WeighIn fishTypes={fishTypes} />
 						</div>
 					</div>
 				</main>

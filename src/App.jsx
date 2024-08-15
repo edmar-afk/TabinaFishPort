@@ -12,6 +12,10 @@ import Registration from "./pages/Registration";
 import FishingPermit from "./partials/registration/FishingPermit";
 import FishingPermitReg from './pages/FishingPermitReg';
 import WeightCalculate from "./pages/WeightCalculate";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import FishTypes from "./pages/FishTypes";
+import FishermenRegistration from "./pages/FishermenRegistration";
 function App() {
 	const location = useLocation();
 
@@ -26,8 +30,18 @@ function App() {
 			<Routes>
 				<Route
 					exact
-					path="/"
+					path="/dashboard"
 					element={<Dashboard />}
+				/>
+				<Route
+					exact
+					path="/register"
+					element={<Register />}
+				/>
+				<Route
+					exact
+					path="/"
+					element={<Login />}
 				/>
 				<Route
 					exact
@@ -42,8 +56,25 @@ function App() {
 
 				<Route
 					exact
+					path="/registration"
+					element={<Registration />}
+				/>
+
+				<Route
+					exact
+					path="/fishermen-registration"
+					element={<FishermenRegistration />}
+				/>
+
+				<Route
+					exact
 					path="/fishing-permit"
 					element={<FishingPermitReg />}
+				/>
+				<Route
+					exact
+					path="/fish-types"
+					element={<FishTypes />}
 				/>
 				<Route
 					exact
