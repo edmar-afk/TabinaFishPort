@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Modal from "@mui/material/Modal";
+import React, { useState } from "react";import Modal from "@mui/material/Modal";
 import CircularProgress from "@mui/material/CircularProgress";
 import api from "../../assets/api";
 import CloseIcon from "@mui/icons-material/Close";
@@ -46,7 +45,6 @@ export default function HistoryModal() {
 						<div className="text-gray-800 dark:text-white sticky -top-6 py-4 g-white dark:bg-gray-800/20 backdrop-blur-lg">
 							Your Transaction History display here
 						</div>
-						
 
 						{loading ? (
 							<div className="flex justify-center items-center">
@@ -56,21 +54,24 @@ export default function HistoryModal() {
 							<div className="text-red-600">{error}</div>
 						) : (
 							<ul>
-								{weighIns.map((weighIn) => (
-									<li
-										key={weighIn.id}
-										className="mb-4 flex flex-row">
-										<div className="text-sm text-left">
-											<span className="text-purple-400 font-bold">{weighIn.fish.name}</span> with a price of{" "}
-											<span className="text-purple-400 font-bold">₱{weighIn.price_per_kilo}/kg</span> and a weight of{" "}
-											<span className="text-purple-400 font-bold">{weighIn.kg}kg</span> has been sold for a total of{" "}
-											<span className="text-purple-400 font-bold">₱{weighIn.total_price}</span> at{" "}
-											<span className="text-purple-400 font-bold">
-												{new Date(weighIn.date_weighin).toLocaleString()}
-											</span>
-										</div>
-									</li>
-								))}
+								{weighIns
+									.slice() // Create a copy of the array to avoid mutating the original array
+									.sort((a, b) => new Date(b.date_weighin) - new Date(a.date_weighin)) // Sort by date descending
+									.map((weighIn) => (
+										<li
+											key={weighIn.id}
+											className="mb-4 flex flex-row">
+											<div className="text-sm text-left">
+												<span className="text-purple-400 font-bold">{weighIn.fish.name}</span> with a price of{" "}
+												<span className="text-purple-400 font-bold">₱{weighIn.price_per_kilo}/kg</span> and a weight of{" "}
+												<span className="text-purple-400 font-bold">{weighIn.kg}kg</span> has been sold for a total of{" "}
+												<span className="text-purple-400 font-bold">₱{weighIn.total_price}</span> at{" "}
+												<span className="text-purple-400 font-bold">
+													{new Date(weighIn.date_weighin).toLocaleString()}
+												</span>
+											</div>
+										</li>
+									))}
 							</ul>
 						)}
 					</div>

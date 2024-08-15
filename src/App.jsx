@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import "./css/style.css";
 
@@ -24,6 +24,17 @@ function App() {
 		window.scroll({ top: 0 });
 		document.querySelector("html").style.scrollBehavior = "";
 	}, [location.pathname]); // triggered on route change
+
+	function Logout() {
+		localStorage.clear();
+		return <Navigate to="/" />;
+	}
+
+	function RegisterAndLogout() {
+		localStorage.clear();
+		return <Register />;
+	}
+
 
 	return (
 		<>
@@ -80,6 +91,11 @@ function App() {
 					exact
 					path="/weigh-in"
 					element={<WeightCalculate />}
+				/>
+
+				<Route
+					path="/logout"
+					element={<Logout />}
 				/>
 			</Routes>
 		</>

@@ -38,7 +38,7 @@ function Login() {
 			localStorage.setItem("refresh_token", refresh);
 
 			// Fetch user profile to check if the user is a superuser
-			const userProfileResponse = await api.get("/api/user/profile/", {
+			const userProfileResponse = await api.get("/api/user/", {
 				headers: {
 					Authorization: `Bearer ${access}`,
 				},
