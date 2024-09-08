@@ -1,5 +1,4 @@
 import logo from "../../images/logo.png";
-import Warnings from "./Warnings";
 function FishingPermit() {
 	return (
 		<>
