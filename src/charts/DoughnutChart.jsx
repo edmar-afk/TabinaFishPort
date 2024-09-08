@@ -7,7 +7,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-moment';
 
-// Import utilities
 import { tailwindConfig } from '../utils/Utils';
 
 Chart.register(DoughnutController, ArcElement, TimeScale, Tooltip);
@@ -27,7 +26,6 @@ function DoughnutChart({
 
   useEffect(() => {
     const ctx = canvas.current;
-    // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
       type: 'doughnut',
       data: data,
@@ -63,16 +61,13 @@ function DoughnutChart({
           afterUpdate(c, args, options) {
             const ul = legend.current;
             if (!ul) return;
-            // Remove old legend items
             while (ul.firstChild) {
               ul.firstChild.remove();
             }
-            // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
             items.forEach((item) => {
               const li = document.createElement('li');
               li.style.margin = tailwindConfig().theme.margin[1];
-              // Button element
               const button = document.createElement('button');
               button.classList.add('btn-xs', 'bg-white', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400', 'shadow-sm', 'shadow-black/[0.08]', 'rounded-full');
               button.style.opacity = item.hidden ? '.3' : '';
@@ -80,7 +75,6 @@ function DoughnutChart({
                 c.toggleDataVisibility(item.index);
                 c.update();
               };
-              // Color box
               const box = document.createElement('span');
               box.style.display = 'block';
               box.style.width = tailwindConfig().theme.width[2];
@@ -89,7 +83,6 @@ function DoughnutChart({
               box.style.borderRadius = tailwindConfig().theme.borderRadius.sm;
               box.style.marginRight = tailwindConfig().theme.margin[1];
               box.style.pointerEvents = 'none';
-              // Label
               const label = document.createElement('span');
               label.style.display = 'flex';
               label.style.alignItems = 'center';
@@ -106,7 +99,6 @@ function DoughnutChart({
     });
     setChart(newChart);
     return () => newChart.destroy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

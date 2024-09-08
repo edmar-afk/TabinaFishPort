@@ -9,7 +9,7 @@ function DashboardCard04() {
   const chartData = {
 		labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 		datasets: [
-			// Light blue bars
+			
 			{
 				label: "Weekly Profit",
 				data: [800, 1600, 900, 1300, 1950, 1700, 100],
@@ -32,8 +32,7 @@ function DashboardCard04() {
 					<a href='#' className="font-semibold hover:scale-110 duration-300 text-purple-600 dark:text-gray-100 bg-purple-200 dark:bg-purple-700 mx-2 p-0.5 px-2 my-1 sm:my-0 rounded-xl">Monthly</a>
 				</div>
 			</header>
-			{/* Chart built with Chart.js 3 */}
-			{/* Change the height attribute to adjust the chart height */}
+			
 			<BarChart
 				data={chartData}
 				width={595}

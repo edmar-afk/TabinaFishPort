@@ -14,10 +14,10 @@ function DashboardCard07({isListPage}) {
 				<h2 className="font-semibold text-gray-800 dark:text-gray-100">Registered Fishermen</h2>
 			</header>
 			<div className="p-3">
-				{/* Table */}
+				
 				<div className="overflow-x-auto">
 					<table className="table-auto w-full dark:text-gray-300">
-						{/* Table header */}
+						
 						<thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm">
 							<tr>
 								<th className="p-2">

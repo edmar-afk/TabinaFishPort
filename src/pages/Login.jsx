@@ -12,7 +12,7 @@ function Login() {
 		password: "",
 	});
 	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate(); // For programmatic navigation
+	const navigate = useNavigate(); 
 
 	const handleChange = (e) => {
 		setFormData({
@@ -33,11 +33,11 @@ function Login() {
 
 			const { access, refresh } = response.data;
 
-			// Save tokens to local storage
+			
 			localStorage.setItem("access_token", access);
 			localStorage.setItem("refresh_token", refresh);
 
-			// Fetch user profile to check if the user is a superuser
+			
 			const userProfileResponse = await api.get("/api/user/", {
 				headers: {
 					Authorization: `Bearer ${access}`,
@@ -46,7 +46,7 @@ function Login() {
 
 			const { is_superuser } = userProfileResponse.data;
 
-			// Navigate based on user role
+			
 			if (is_superuser) {
 				Swal.fire({
 					title: "Login successful!",

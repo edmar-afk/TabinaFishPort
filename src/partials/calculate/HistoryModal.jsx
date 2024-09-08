@@ -55,8 +55,8 @@ export default function HistoryModal() {
 						) : (
 							<ul>
 								{weighIns
-									.slice() // Create a copy of the array to avoid mutating the original array
-									.sort((a, b) => new Date(b.date_weighin) - new Date(a.date_weighin)) // Sort by date descending
+									.slice() 
+									.sort((a, b) => new Date(b.date_weighin) - new Date(a.date_weighin)) 
 									.map((weighIn) => (
 										<li
 											key={weighIn.id}

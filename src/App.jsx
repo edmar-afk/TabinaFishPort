@@ -5,7 +5,7 @@ import "./css/style.css";
 
 import "./charts/ChartjsConfig";
 
-// Import pages
+
 import Dashboard from "./pages/Dashboard";
 import FisherManList from "./pages/FisherManList";
 import Registration from "./pages/Registration";
@@ -23,7 +23,7 @@ function App() {
 		document.querySelector("html").style.scrollBehavior = "auto";
 		window.scroll({ top: 0 });
 		document.querySelector("html").style.scrollBehavior = "";
-	}, [location.pathname]); // triggered on route change
+	}, [location.pathname]); 
 
 	function Logout() {
 		localStorage.clear();

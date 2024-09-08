@@ -36,7 +36,7 @@ function Register() {
 			return;
 		}
 
-		setLoading(true); // Start loading
+		setLoading(true); 
 
 		try {
 			await api.post("/api/register/", {
@@ -51,7 +51,7 @@ function Register() {
 				confirmButtonText: "Okay",
 			}).then((result) => {
 				if (result.isConfirmed) {
-					navigate("/login"); // Redirect to login page
+					navigate("/login"); 
 				}
 			});
 		} catch (error) {
@@ -62,7 +62,7 @@ function Register() {
 				text: "Something went wrong. Please try again.",
 			});
 		} finally {
-			setLoading(false); // Stop loading
+			setLoading(false); 
 		}
 	};
 

@@ -6,8 +6,6 @@ import {
   Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
 } from 'chart.js';
 import 'chartjs-adapter-moment';
-
-// Import utilities
 import { tailwindConfig, hexToRGB, formatValue } from '../utils/Utils';
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
@@ -102,10 +100,7 @@ function RealtimeChart({
     });
     setChart(newChart);
     return () => newChart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
-  // Update header values
   useEffect(() => {
     const currentValue = data.datasets[0].data[data.datasets[0].data.length - 1];
     const previousValue = data.datasets[0].data[data.datasets[0].data.length - 2];

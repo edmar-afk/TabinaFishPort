@@ -7,26 +7,26 @@ import CloseIcon from "@mui/icons-material/Close";
 const FishCaughtModal = ({ isOpen, handleClose }) => {
 	const [currentDateTime, setCurrentDateTime] = useState("");
 	const [fishData, setFishData] = useState([]);
-	const [isDescending, setIsDescending] = useState(true); // State to toggle sorting
+	const [isDescending, setIsDescending] = useState(true); 
 
 	useEffect(() => {
 		const updateDateTime = () => {
 			const now = new Date();
-			setCurrentDateTime(format(now, "MMM dd yyyy, hh:mm:ss a")); // Format as "Aug 15 2024, 11:40:30 PM"
+			setCurrentDateTime(format(now, "MMM dd yyyy, hh:mm:ss a")); 
 		};
 
 		updateDateTime();
-		const intervalId = setInterval(updateDateTime, 1000); // Update every second
+		const intervalId = setInterval(updateDateTime, 1000); 
 		return () => clearInterval(intervalId);
 	}, []);
 
 	useEffect(() => {
 		const fetchFishData = async () => {
 			try {
-				const response = await api.get("/api/fish-totals/"); // Use your custom api module
+				const response = await api.get("/api/fish-totals/"); 
 				const data = response.data;
 
-				// Sort fish data based on isDescending
+			
 				const sortedData = data.sort((a, b) => (isDescending ? b.total_kg - a.total_kg : a.total_kg - b.total_kg));
 
 				setFishData(sortedData);
@@ -47,7 +47,7 @@ const FishCaughtModal = ({ isOpen, handleClose }) => {
 	return (
 		<Modal
 			open={isOpen}
-			onClose={handleClose} // This should trigger the modal to close
+			onClose={handleClose} 
 			aria-labelledby="modal-modal-title"
 			aria-describedby="modal-modal-description">
 			<div className="fixed inset-0 flex items-center justify-center">

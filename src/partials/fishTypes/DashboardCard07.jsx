@@ -41,7 +41,7 @@ function DashboardCard07({ isListPage }) {
 		});
 
 		if (success) {
-			fetchFishTypes(); // Refresh data on success
+			fetchFishTypes(); 
 		}
 	};
 
@@ -64,7 +64,7 @@ function DashboardCard07({ isListPage }) {
 					message: "Fish type deleted successfully!",
 					severity: "success",
 				});
-				fetchFishTypes(); // Refresh data after deletion
+				fetchFishTypes(); 
 			}
 		} catch (error) {
 			setAlert({
@@ -95,10 +95,10 @@ function DashboardCard07({ isListPage }) {
 				<AddFishModal onSubmit={handleModalSubmit} />
 			</header>
 			<div className="p-3">
-				{/* Table */}
+			
 				<div className="overflow-x-auto">
 					<table className="table-auto w-full dark:text-gray-300">
-						{/* Table header */}
+						
 						<thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm">
 							<tr>
 								<th className="p-2">
@@ -110,7 +110,7 @@ function DashboardCard07({ isListPage }) {
 								</th>
 							</tr>
 						</thead>
-						{/* Table body */}
+						
 						<tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
 							{fishTypes.map((fishType) => (
 								<tr key={fishType.id}>

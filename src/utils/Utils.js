@@ -21,7 +21,7 @@ export const hexToRGB = (h) => {
 	return `${+r},${+g},${+b}`;
 };
 
-export const formatValue = (value, currency = "USD") =>
+export const formatValue = (value, currency = "PHP") =>
 	Intl.NumberFormat("en-US", {
 		style: "currency",
 		currency: currency,

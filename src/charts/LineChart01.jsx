@@ -6,8 +6,6 @@ import {
   Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
 } from 'chart.js';
 import 'chartjs-adapter-moment';
-
-// Import utilities
 import { formatValue } from '../utils/Utils';
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
@@ -26,7 +24,6 @@ function LineChart01({
 
   useEffect(() => {
     const ctx = canvas.current;
-    // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
       type: 'line',
       data: data,
@@ -51,7 +48,7 @@ function LineChart01({
         plugins: {
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
+              title: () => false, 
               label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
@@ -72,7 +69,6 @@ function LineChart01({
     });
     setChart(newChart);
     return () => newChart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomi
 import SailingOutlinedIcon from "@mui/icons-material/SailingOutlined";
 import PhishingSharpIcon from "@mui/icons-material/PhishingSharp";
 import SetMealSharpIcon from "@mui/icons-material/SetMealSharp";
-
+import ScaleIcon from "@mui/icons-material/Scale";
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 	const location = useLocation();
 	const { pathname } = location;
@@ -18,7 +18,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 		storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
 	);
 
-	// close on click outside
+	
 	useEffect(() => {
 		const clickHandler = ({ target }) => {
 			if (!sidebar.current || !trigger.current) return;
@@ -29,7 +29,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 		return () => document.removeEventListener("click", clickHandler);
 	});
 
-	// close if the esc key is pressed
+	
 	useEffect(() => {
 		const keyHandler = ({ keyCode }) => {
 			if (!sidebarOpen || keyCode !== 27) return;
@@ -50,23 +50,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 
 	return (
 		<div className="min-w-fit">
-			{/* Sidebar backdrop (mobile only) */}
 			<div
 				className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
 					sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
 				}`}
 				aria-hidden="true"></div>
 
-			{/* Sidebar */}
 			<div
 				id="sidebar"
 				ref={sidebar}
 				className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
 					sidebarOpen ? "translate-x-0" : "-translate-x-64"
 				} ${variant === "v2" ? "border-r border-gray-200 dark:border-gray-700/60" : "rounded-r-2xl shadow-sm"}`}>
-				{/* Sidebar header */}
 				<div className="flex justify-between mb-10 pr-3 sm:px-2">
-					{/* Close button */}
 					<button
 						ref={trigger}
 						className="lg:hidden text-gray-500 hover:text-gray-400"
@@ -81,7 +77,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 							<path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
 						</svg>
 					</button>
-					{/* Logo */}
+
 					<NavLink
 						end
 						to="/"
@@ -95,9 +91,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 					</NavLink>
 				</div>
 
-				{/* Links */}
 				<div className="space-y-8">
-					{/* Pages group */}
 					<div>
 						<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
 							<span
@@ -131,7 +125,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 												Dashboard
 											</span>
 										</div>
-										{/* Badge */}
 									</div>
 								</NavLink>
 							</li>
@@ -159,12 +152,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 												Fishermen List
 											</span>
 										</div>
-										{/* Badge */}
 									</div>
 								</NavLink>
 							</li>
 
-							{/* Registration */}
 							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
 								<span
 									className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -306,7 +297,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									}>
 									<div className="flex items-center justify-between">
 										<div className="grow flex items-center">
-											<SetMealSharpIcon className="text-gray-600 dark:text-white" />
+											<ScaleIcon className="text-gray-600 dark:text-white" />
 											<span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 												Fish Weigh-in
 											</span>

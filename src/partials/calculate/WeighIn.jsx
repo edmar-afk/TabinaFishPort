@@ -3,7 +3,7 @@ import ScaleIcon from "@mui/icons-material/Scale";
 import RestoreOutlinedIcon from "@mui/icons-material/RestoreOutlined";
 import { useState } from "react";
 import api from "../../assets/api";
-import Swal from "sweetalert2"; // Assuming you're using SweetAlert2 for notifications
+import Swal from "sweetalert2";
 import HistoryModal from "./HistoryModal";
 
 function WeighIn({ fishTypes }) {
@@ -14,7 +14,7 @@ function WeighIn({ fishTypes }) {
 
 	const calculateTotal = (price, kilo) => {
 		let total = price * kilo;
-		setTotal(total.toFixed(2)); // Set total with 2 decimal places
+		setTotal(total.toFixed(2)); 
 	};
 
 	const handlePriceChange = (e) => {
@@ -46,7 +46,7 @@ function WeighIn({ fishTypes }) {
 		try {
 			const response = await api.post("/api/weighin/", newWeighIn);
 			Swal.fire("Success!", "Weigh-in recorded successfully.", "success");
-			// Clear form inputs after successful submission
+			
 			setPrice("");
 			setKilo("");
 			setTotal(0);
@@ -56,7 +56,7 @@ function WeighIn({ fishTypes }) {
 		}
 	};
 
-	// Ensure id comparison is consistent
+	
 	const selectedFishName = fishTypes.find((fish) => fish.id === parseInt(selectedFishType))?.name || "None selected";
 
 	return (

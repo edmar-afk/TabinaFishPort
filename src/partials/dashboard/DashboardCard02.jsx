@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CountUp from "react-countup";
 import catchFish from "../../images/catchFish.png";
 import Bubbles from "../../components/Bubbles";
-import FishCaughtModal from "./FishCaughtModal"; // Adjust the path as needed
+import FishCaughtModal from "./FishCaughtModal";
 
 function DashboardCard02() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +45,7 @@ function DashboardCard02() {
 				</div>
 			</div>
 
-			{/* Modal Component */}
+			
 			<FishCaughtModal
 				isOpen={isModalOpen}
 				handleClose={handleCloseModal}
