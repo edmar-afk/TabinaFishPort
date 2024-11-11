@@ -1,5 +1,4 @@
-import React, { useState } from "react";import logo from "../images/logo.png";import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import React, { useState } from "react";import logo from "../images/logo.png";import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../assets/api";
@@ -33,20 +32,23 @@ function Login() {
 
 			const { access, refresh } = response.data;
 
-			
 			localStorage.setItem("access_token", access);
 			localStorage.setItem("refresh_token", refresh);
 
-			
+			// Fetch the user's profile data
 			const userProfileResponse = await api.get("/api/user/", {
 				headers: {
 					Authorization: `Bearer ${access}`,
 				},
 			});
 
-			const { is_superuser } = userProfileResponse.data;
+			const userData = userProfileResponse.data;
+			const { is_superuser } = userData;
 
-			
+			// Save userData in localStorage
+			localStorage.setItem("userData", JSON.stringify(userData));
+
+			// Navigate based on user type
 			if (is_superuser) {
 				Swal.fire({
 					title: "Login successful!",
@@ -78,6 +80,7 @@ function Login() {
 			setLoading(false);
 		}
 	};
+
 
 	return (
 		<>

@@ -16,6 +16,9 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import FishTypes from "./pages/FishTypes";
 import FishermenRegistration from "./pages/FishermenRegistration";
+import FishermanDashboard from "./pages/FishermanDashboard";
+import FishermenReg from "./partials/registration/FishermenReg";
+import FishingPermitRegDashboard from "./partials/fisherman/FishingPermitRegDashboard";
 function App() {
 	const location = useLocation();
 
@@ -64,19 +67,16 @@ function App() {
 					path="/registration"
 					element={<Registration />}
 				/>
-
-				<Route
-					exact
-					path="/registration"
-					element={<Registration />}
-				/>
-
 				<Route
 					exact
 					path="/fishermen-registration"
-					element={<FishermenRegistration />}
+					element={<FishermanDashboard />}
 				/>
-
+				<Route
+					exact
+					path="/fishingPermit-registration"
+					element={<FishingPermitRegDashboard />} //registration inig login sa fisherman
+				/>
 				<Route
 					exact
 					path="/fishing-permit"

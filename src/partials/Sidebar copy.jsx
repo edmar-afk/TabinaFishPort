@@ -156,7 +156,94 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 								</NavLink>
 							</li>
 
-							
+							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
+								<span
+									className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+									aria-hidden="true">
+									•••
+								</span>
+								<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Registration</span>
+							</h3>
+							<li
+								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+									pathname.includes("fishermen-registration") &&
+									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+								}`}>
+								<NavLink
+									end
+									to={"/fishermen-registration"}
+									className={({ isActive }) =>
+										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
+										}`
+									}>
+									<div className="flex items-center justify-between">
+										<div className="grow flex items-center">
+											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Fishermen Registration
+											</span>
+										</div>
+										{/* Badge */}
+									</div>
+								</NavLink>
+							</li>
+
+							<li
+								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+									pathname.includes("registration") &&
+									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+								}`}>
+								<NavLink
+									end
+									to={"/registration"}
+									className={({ isActive }) =>
+										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
+										}`
+									}>
+									<div className="flex items-center justify-between">
+										<div className="grow flex items-center">
+											<SailingOutlinedIcon className="text-gray-600 dark:text-white" />
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Vessel Registration
+											</span>
+										</div>
+										{/* Badge */}
+									</div>
+								</NavLink>
+							</li>
+
+							<li
+								className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+									pathname.includes("fishing-permit") &&
+									"from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+								}`}>
+								<NavLink
+									end
+									to={"/fishing-permit"}
+									className={({ isActive }) =>
+										`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+											isActive
+												? "bg-gradient-to-l from-purple-500/20 rounded-xl py-2"
+												: "hover:text-gray-900 dark:hover:text-white"
+										}`
+									}>
+									<div className="flex items-center justify-between">
+										<div className="grow flex items-center">
+											<PhishingSharpIcon className="text-gray-600 dark:text-white" />
+											<span className="text-xs font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+												Fishing Permit
+											</span>
+										</div>
+										{/* Badge */}
+									</div>
+								</NavLink>
+							</li>
 
 							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
 								<span

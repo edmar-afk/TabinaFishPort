@@ -9,7 +9,9 @@
 
 @import 'tailwindcss/utilities';
 
-
+body {
+  font-family: 'Poppins', sans-serif;
+}
 @keyframes animateSprite {
   0% {
     background-position: -600px; /* Starting position moving left sprite */

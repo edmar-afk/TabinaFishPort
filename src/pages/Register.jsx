@@ -195,7 +195,7 @@ function Register() {
 							<div className="">
 								Already have an account?{" "}
 								<Link
-									to={"/login"}
+									to={"/"}
 									className="text-purple-600 font-bold">
 									Login here
 								</Link>

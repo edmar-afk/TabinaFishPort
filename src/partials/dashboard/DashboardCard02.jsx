@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import catchFish from "../../images/catchFish.png";
 import Bubbles from "../../components/Bubbles";
 import FishCaughtModal from "./FishCaughtModal";
+import api from "../../assets/api";
 
 function DashboardCard02() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [totalWeight, setTotalWeight] = useState(0); // State for total weight
+
+	// Fetch the total weight of fish caught today
+	useEffect(() => {
+		const fetchTotalWeight = async () => {
+			try {
+				const response = await api.get("/api/total-weight-today/"); // Update with your actual API endpoint
+				setTotalWeight(response.data.total_weight_today); // Set the fetched total weight
+			} catch (error) {
+				console.error("Error fetching total weight:", error);
+			}
+		};
+
+		fetchTotalWeight();
+	}, []);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
@@ -28,7 +44,7 @@ function DashboardCard02() {
 					<div className="flex items-start">
 						<div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
 							<CountUp
-								end={150}
+								end={totalWeight} // Dynamically display the fetched total weight
 								duration={2.75}
 							/>
 						</div>
@@ -39,13 +55,12 @@ function DashboardCard02() {
 					<img
 						src={catchFish}
 						className="w-[45%] mx-auto"
-						alt=""
+						alt="Catch Fish"
 					/>
 					<Bubbles />
 				</div>
 			</div>
 
-			
 			<FishCaughtModal
 				isOpen={isModalOpen}
 				handleClose={handleCloseModal}
