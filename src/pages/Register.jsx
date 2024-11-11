@@ -1,7 +1,4 @@
-import React, { useState } from "react";import logo from "../images/logo.png";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import React, { useState } from "react";import logo from "../images/logo.png";import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../assets/api";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,6 +10,7 @@ function Register() {
 		mobile_num: "",
 		password: "",
 		password2: "",
+		is_superuser: false, // Display only; not sent to the API
 	});
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -36,14 +34,18 @@ function Register() {
 			return;
 		}
 
-		setLoading(true); 
+		setLoading(true);
 
 		try {
+			// Send the registration data
 			await api.post("/api/register/", {
-				username: formData.mobile_num,
+				username: formData.mobile_num, // Using mobile number as username
 				password: formData.password,
 				first_name: formData.full_name,
+				email: "", // or add another field to capture email if required
 			});
+
+			// If registration is successful, show success Swal
 			Swal.fire({
 				icon: "success",
 				title: "Registration Successful",
@@ -51,20 +53,36 @@ function Register() {
 				confirmButtonText: "Okay",
 			}).then((result) => {
 				if (result.isConfirmed) {
-					navigate("/login"); 
+					navigate("/");
 				}
 			});
 		} catch (error) {
 			console.error(error);
+
+			// Default error message
+			let errorMessage = "Something went wrong. Please try again.";
+
+			// Check if the error response contains the 'username' field error
+			if (error.response && error.response.data && error.response.data.username) {
+				// Custom message for mobile number (username) already existing
+				if (error.response.data.username[0].includes("username")) {
+					errorMessage = "A user with that Mobile Number already exists.";
+				} else {
+					errorMessage = error.response.data.username[0];
+				}
+			}
+
+			// Show the error message in SweetAlert
 			Swal.fire({
 				icon: "error",
 				title: "Registration Failed",
-				text: "Something went wrong. Please try again.",
+				text: errorMessage,
 			});
 		} finally {
-			setLoading(false); 
+			setLoading(false);
 		}
 	};
+
 
 	return (
 		<>
