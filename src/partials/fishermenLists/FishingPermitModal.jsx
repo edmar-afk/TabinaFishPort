@@ -55,8 +55,8 @@ import React, { useState, useEffect } from "react";import { Box, Modal, Button }
 								<table className="min-w-full table-auto border-collapse border border-gray-300">
 									<thead>
 										<tr>
-											<th className="px-4 py-2 text-left border border-gray-300">Field</th>
-											<th className="px-4 py-2 text-left border border-gray-300">Value</th>
+											<th className="px-4 py-2 text-left border border-gray-300">Fields</th>
+											<th className="px-4 py-2 text-left border border-gray-300">Answers</th>
 										</tr>
 									</thead>
 									<tbody>
