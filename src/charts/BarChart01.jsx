@@ -19,7 +19,6 @@ function BarChart01({ data, width, height }) {
 
 	useEffect(() => {
 		const ctx = canvas.current;
-		// eslint-disable-next-line no-unused-vars
 		const newChart = new Chart(ctx, {
 			type: "bar",
 			data: data,
@@ -39,7 +38,7 @@ function BarChart01({ data, width, height }) {
 						},
 						ticks: {
 							maxTicksLimit: 5,
-							callback: (value) => formatValue(value, "PHP"), // Use peso sign here
+							callback: (value) => formatValue(value, "kg"), // Changed to kilograms
 							color: darkMode ? textColor.dark : textColor.light,
 						},
 						grid: {
@@ -66,7 +65,7 @@ function BarChart01({ data, width, height }) {
 					tooltip: {
 						callbacks: {
 							title: () => false, // Disable tooltip title
-							label: (context) => formatValue(context.parsed.y, "PHP"), // Use peso sign here
+							label: (context) => formatValue(context.parsed.y, "kg"), // Changed to kilograms
 						},
 						bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
 						backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
@@ -132,7 +131,7 @@ function BarChart01({ data, width, height }) {
 							label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
 							label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
 							const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
-							const valueText = document.createTextNode(formatValue(theValue, "PHP"));
+							const valueText = document.createTextNode(formatValue(theValue, "kg")); // Changed to kilograms
 							const labelText = document.createTextNode(item.text);
 							value.appendChild(valueText);
 							label.appendChild(labelText);
@@ -151,6 +150,7 @@ function BarChart01({ data, width, height }) {
 		return () => newChart.destroy();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
 
 	useEffect(() => {
 		if (!chart) return;

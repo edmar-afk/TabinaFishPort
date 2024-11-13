@@ -21,16 +21,17 @@ export const hexToRGB = (h) => {
 	return `${+r},${+g},${+b}`;
 };
 
-export const formatValue = (value, currency = "PHP") =>
-	Intl.NumberFormat("en-US", {
-		style: "currency",
-		currency: currency,
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(value);
-
-export const formatThousands = (value) =>
-	Intl.NumberFormat("en-US", {
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(value);
+export const formatValue = (value, unit = "PHP") => {
+	if (unit === "kg") {
+		// Format value with a "kg" suffix instead of treating it as a currency
+		return `${value.toLocaleString()} kg`;
+	} else {
+		// Format as currency for other units like PHP
+		return Intl.NumberFormat("en-US", {
+			style: "currency",
+			currency: unit,
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0,
+		}).format(value);
+	}
+};
