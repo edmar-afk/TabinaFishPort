@@ -8,6 +8,7 @@ import PhishingIcon from "@mui/icons-material/Phishing";
 import SailingIcon from "@mui/icons-material/Sailing";
 import api from "../../assets/api";
 import FishingPermitModal from "./FishingPermitModal";
+import Swal from "sweetalert2"; // Import Swal
 
 function DashboardCard07({ isListPage }) {
 	const [fishermen, setFishermen] = useState([]);
@@ -23,6 +24,35 @@ function DashboardCard07({ isListPage }) {
 	const closeModal = () => {
 		setSelectedPermitId(null);
 		setIsModalOpen(false);
+	};
+
+	// Function to handle deleting a fisherman
+	const handleDeleteFisherman = async (fishermanId) => {
+		try {
+			// Show confirmation Swal before proceeding with deletion
+			const result = await Swal.fire({
+				title: "Are you sure?",
+				text: "This will permanently delete this fisherman profile!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Yes, delete it!",
+				cancelButtonText: "Cancel",
+			});
+
+			if (result.isConfirmed) {
+				// Proceed with the deletion
+				const response = await api.delete(`/api/users/delete/${fishermanId}/`);
+				if (response.status === 204) {
+					// Remove the deleted fisherman from the state
+					setFishermen(fishermen.filter((fisherman) => fisherman.id !== fishermanId));
+					// Show success message
+					Swal.fire("Deleted!", "The fisherman profile has been deleted.", "success");
+				}
+			}
+		} catch (error) {
+			console.error("Error deleting fisherman:", error);
+			Swal.fire("Error!", "There was an error deleting the fisherman profile.", "error");
+		}
 	};
 
 	useEffect(() => {
@@ -102,31 +132,24 @@ function DashboardCard07({ isListPage }) {
 									<td className="p-2">
 										<div className="text-center text-orange-500">
 											{fishingPermits[fisherman.id] ? (
-												<>
-													<div className="cursor-pointer" onClick={() => openModal(fishingPermits[fisherman.id])}>
-														<PhishingIcon />
-														<span className="text-blue-600 dark:text-blue-300">View Permit</span>
-													</div>
-												</>
+												<div
+													className="cursor-pointer"
+													onClick={() => openModal(fishingPermits[fisherman.id])}>
+													<PhishingIcon />
+													<span className="text-blue-600 dark:text-blue-300">View Permit</span>
+												</div>
 											) : (
 												"No Permit"
 											)}
 										</div>
 									</td>
 									<td className="p-2 flex justify-evenly">
-										<a
-											href="#"
-											className="text-center text-blue-400 flex items-center">
-											<VisibilityIcon
-												fontSize="small"
-												className="mr-1"
-											/>
-											Generate File
-										</a>
+										{/* Delete button with Swal confirmation */}
 										{isListPage && (
 											<a
 												href="#"
-												className="text-center text-red-400 flex items-center">
+												className="text-center text-red-400 flex items-center"
+												onClick={() => handleDeleteFisherman(fisherman.id)}>
 												<DeleteForeverOutlinedIcon
 													fontSize="small"
 													className="mr-1"
