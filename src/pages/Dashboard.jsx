@@ -49,7 +49,7 @@ function Dashboard() {
 
 							{/* Profit gained today */}
 							<DashboardCard03 />
-							<div></div>
+							<div className="mb-14"></div>
 							{/* Bar chart Sales */}
 							<DashboardCard04 />
 

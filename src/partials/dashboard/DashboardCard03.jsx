@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Bubbles from "../../components/Bubbles";
-import profit from "../../images/profit.png";
+import lguLogo from "../../images/lgu.jpg";
 import CountUp from "react-countup";
 import api from "../../assets/api";
 
@@ -42,8 +42,8 @@ function DashboardCard03() {
 
 			<div className="grow max-sm:max-h-[128px] xl:max-h-[128px] ocean">
 				<img
-					src={profit}
-					className="w-[70%] mx-auto"
+					src={lguLogo}
+					className="w-44 mx-auto rounded-full"
 					alt=""
 				/>
 				<Bubbles />
