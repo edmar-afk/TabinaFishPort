@@ -122,15 +122,7 @@ function DashboardCard07({ isListPage }) {
 									</td>
 
 									<td className="p-2 flex justify-center">
-										<a
-											href="#"
-											className="text-center text-blue-400 flex items-center hover:scale-110 duration-300 mr-2">
-											<BorderColorOutlinedIcon
-												fontSize="small"
-												className="mr-1"
-											/>
-											Update
-										</a>
+										
 
 										<a
 											href="#"
