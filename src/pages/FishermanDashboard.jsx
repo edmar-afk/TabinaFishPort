@@ -1,5 +1,4 @@
-import PhishingIcon from "@mui/icons-material/Phishing";import SailingIcon from "@mui/icons-material/Sailing";import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import fishermanBg from "../images/fishermanbg.jpg";
+import PhishingIcon from "@mui/icons-material/Phishing";import SailingIcon from "@mui/icons-material/Sailing";import ExitToAppIcon from "@mui/icons-material/ExitToApp";import fishermanBg from "../images/fishermanbg.jpg";
 import { Link } from "react-router-dom";
 function FishermanDashboard() {
 	const userData = JSON.parse(localStorage.getItem("userData")) || {};
@@ -48,11 +47,11 @@ function FishermanDashboard() {
 									/>
 									<h3 className="text-xl mb-4 text-purple-100">Vessel Registration</h3>
 									<p className="text-gray-300">Please fill up the form to become a certified Tabina Fisherman.</p>
-									<a
-										href="#;"
+									<Link
+										to={"/vessel-registration"}
 										className="text-blue-400 inline-block mt-4 hover:underline">
 										Fill up here
-									</a>
+									</Link>
 								</div>
 							</div>
 						</div>

@@ -9,10 +9,12 @@ import SailingIcon from "@mui/icons-material/Sailing";
 import api from "../../assets/api";
 import FishingPermitModal from "./FishingPermitModal";
 import Swal from "sweetalert2"; // Import Swal
+import VesselModal from "./VesselModal";
 
-function DashboardCard07({ isListPage }) {
+const DashboardCard07 = ({ isListPage }) => {
 	const [fishermen, setFishermen] = useState([]);
 	const [fishingPermits, setFishingPermits] = useState({});
+	const [vesselRegistrations, setVesselRegistrations] = useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedPermitId, setSelectedPermitId] = useState(null);
 
@@ -26,65 +28,62 @@ function DashboardCard07({ isListPage }) {
 		setIsModalOpen(false);
 	};
 
-	// Function to handle deleting a fisherman
-	const handleDeleteFisherman = async (fishermanId) => {
-		try {
-			// Show confirmation Swal before proceeding with deletion
-			const result = await Swal.fire({
-				title: "Are you sure?",
-				text: "This will permanently delete this fisherman profile!",
-				icon: "warning",
-				showCancelButton: true,
-				confirmButtonText: "Yes, delete it!",
-				cancelButtonText: "Cancel",
-			});
+	const [selectedVesselId, setSelectedVesselId] = useState(null);
+	const [isVesselModalOpen, setIsVesselModalOpen] = useState(false);
 
-			if (result.isConfirmed) {
-				// Proceed with the deletion
-				const response = await api.delete(`/api/users/delete/${fishermanId}/`);
-				if (response.status === 204) {
-					// Remove the deleted fisherman from the state
-					setFishermen(fishermen.filter((fisherman) => fisherman.id !== fishermanId));
-					// Show success message
-					Swal.fire("Deleted!", "The fisherman profile has been deleted.", "success");
-				}
-			}
-		} catch (error) {
-			console.error("Error deleting fisherman:", error);
-			Swal.fire("Error!", "There was an error deleting the fisherman profile.", "error");
-		}
+	const openVesselModal = (vesselId) => {
+		setSelectedVesselId(vesselId);
+		setIsVesselModalOpen(true);
+	};
+
+	const closeVesselModal = () => {
+		setSelectedVesselId(null);
+		setIsVesselModalOpen(false);
 	};
 
 	useEffect(() => {
-		const fetchFishermenAndPermits = async () => {
+		const fetchFishermenAndData = async () => {
 			try {
 				const response = await api.get("/api/fishermen/");
 				const fishermenData = response.data;
 				setFishermen(fishermenData);
 
-				const permitPromises = fishermenData.map(async (fisherman) => {
+				// Fetch permits and vessel registrations concurrently
+				const dataPromises = fishermenData.map(async (fisherman) => {
 					try {
-						const permitResponse = await api.get(`/api/fishing-permits/latest/${fisherman.id}/`);
-						const permitId = permitResponse.data.owner || null;
-						return { fishermanId: fisherman.id, permitId };
+						const [permitResponse, vesselResponse] = await Promise.all([
+							api.get(`/api/fishing-permits/latest/${fisherman.id}/`),
+							api.get(`/api/vessel-registration/latest/${fisherman.id}/`),
+						]);
+
+						return {
+							fishermanId: fisherman.id,
+							permitId: permitResponse.data.owner || null,
+							vesselRegistration: vesselResponse.data || null,
+						};
 					} catch (error) {
-						console.error(`Error fetching permit for fisherman ${fisherman.id}:`, error);
-						return { fishermanId: fisherman.id, permitId: null };
+						console.error(`Error fetching data for fisherman ${fisherman.id}:`, error);
+						return { fishermanId: fisherman.id, permitId: null, vesselRegistration: null };
 					}
 				});
 
-				const permits = await Promise.all(permitPromises);
+				const allData = await Promise.all(dataPromises);
 				const permitsMap = {};
-				permits.forEach(({ fishermanId, permitId }) => {
+				const vesselsMap = {};
+
+				allData.forEach(({ fishermanId, permitId, vesselRegistration }) => {
 					permitsMap[fishermanId] = permitId;
+					vesselsMap[fishermanId] = vesselRegistration;
 				});
+
 				setFishingPermits(permitsMap);
+				setVesselRegistrations(vesselsMap);
 			} catch (error) {
 				console.error("Error fetching fishermen data:", error);
 			}
 		};
 
-		fetchFishermenAndPermits();
+		fetchFishermenAndData();
 	}, []);
 
 	return (
@@ -125,12 +124,21 @@ function DashboardCard07({ isListPage }) {
 										</div>
 									</td>
 									<td className="p-2">
-										<div className="text-center text-red-400">
-											<SailingIcon /> No Permit
+										<div className="text-center">
+											{vesselRegistrations[fisherman.id]?.id ? (
+												<div
+													className="cursor-pointer flex items-center justify-center gap-1"
+													onClick={() => openVesselModal(vesselRegistrations[fisherman.id].id)}>
+													<SailingIcon />
+													<span className="text-blue-600 dark:text-blue-300">View Vessel</span>
+												</div>
+											) : (
+												"No Registration"
+											)}
 										</div>
 									</td>
 									<td className="p-2">
-										<div className="text-center text-orange-500">
+										<div className="text-center">
 											{fishingPermits[fisherman.id] ? (
 												<div
 													className="cursor-pointer"
@@ -144,7 +152,6 @@ function DashboardCard07({ isListPage }) {
 										</div>
 									</td>
 									<td className="p-2 flex justify-evenly">
-										{/* Delete button with Swal confirmation */}
 										{isListPage && (
 											<a
 												href="#"
@@ -165,7 +172,6 @@ function DashboardCard07({ isListPage }) {
 				</div>
 			</div>
 
-			{/* Render modal only if there's a selectedPermitId */}
 			{selectedPermitId && (
 				<FishingPermitModal
 					permitId={selectedPermitId}
@@ -173,8 +179,16 @@ function DashboardCard07({ isListPage }) {
 					onClose={closeModal}
 				/>
 			)}
+
+			{selectedVesselId && (
+				<VesselModal
+					vesselId={selectedVesselId}
+					isOpen={isVesselModalOpen}
+					onClose={closeVesselModal}
+				/>
+			)}
 		</div>
 	);
-}
+};
 
 export default DashboardCard07;

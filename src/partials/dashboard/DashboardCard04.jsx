@@ -13,7 +13,7 @@ function DashboardCard04() {
 		labels: fishTypes.map((fish) => fish.name), // Fish names as chart labels
 		datasets: [
 			{
-				label: fishTypes.length > 0 ? `${fishTypes[0].name} Weekly Kg Caught` : "Fish Types Weekly Kg Caught",
+				label: fishTypes.length > 0 ? `Daily Kg Caught` : "Fish Types Daily Kg Caught",
 				data: fishTypes.map((fish) => weighInData[fish.name] || 0), // Map weigh-in data to fish names
 				backgroundColor: tailwindConfig().theme.colors.sky[500],
 				hoverBackgroundColor: tailwindConfig().theme.colors.sky[600],

@@ -19,6 +19,7 @@ import FishermenRegistration from "./pages/FishermenRegistration";
 import FishermanDashboard from "./pages/FishermanDashboard";
 import FishermenReg from "./partials/registration/FishermenReg";
 import FishingPermitRegDashboard from "./partials/fisherman/FishingPermitRegDashboard";
+import VesselRegDashboard from "./partials/fisherman/VesselRegDashboard";
 function App() {
 	const location = useLocation();
 
@@ -76,6 +77,11 @@ function App() {
 					exact
 					path="/fishingPermit-registration"
 					element={<FishingPermitRegDashboard />} //registration inig login sa fisherman
+				/>
+				<Route
+					exact
+					path="/vessel-registration"
+					element={<VesselRegDashboard />} //registration inig login sa fisherman
 				/>
 				<Route
 					exact
