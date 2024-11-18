@@ -1,7 +1,7 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";
-import { useState, useEffect } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
 function FishingPermit() {
 	const [loading, setLoading] = useState(true); // Add loading state
 	const userData = JSON.parse(localStorage.getItem("userData")) || {};
@@ -76,13 +76,24 @@ function FishingPermit() {
 	};
 
 	// Handle form submission
-	const handleSubmit = async () => {
-		console.log("FormData before submit:", formData); // Log formData to check owner_name
+	const handleSubmit = async (event) => {
+		event.preventDefault(); // Prevent form submission default behavior
+
+		console.log("FormData before submit:", formData);
 		try {
 			// Post form data to the API
 			const response = await api.post(`/api/register-fishing-permit/${userData.id}/`, formData);
 			if (response.status === 201) {
-				alert("Fishing permit registered successfully!");
+				Swal.fire({
+					title: "Success!",
+					text: "Fishing permit registered successfully!",
+					icon: "success",
+					confirmButtonText: "OK",
+				}).then(() => {
+					// Refresh the page after the alert is closed
+					window.location.reload();
+				});
+
 				// Optionally clear form after submission
 				setFormData({
 					address: "",
@@ -115,9 +126,15 @@ function FishingPermit() {
 			}
 		} catch (error) {
 			console.error("Error registering fishing permit:", error);
-			alert("There was an error submitting the form.");
+			Swal.fire({
+				title: "Error!",
+				text: "There was an error submitting the form. Please try again.",
+				icon: "error",
+				confirmButtonText: "OK",
+			});
 		}
 	};
+
 
 	if (loading) return <div>Loading...</div>;
 	return (
