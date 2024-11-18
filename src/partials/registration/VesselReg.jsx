@@ -1,5 +1,4 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";import Swal from "sweetalert2";function VesselReg() {
-	const [loading, setLoading] = useState(true);
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";import Swal from "sweetalert2";function VesselReg() {	const [loading, setLoading] = useState(true);
 	const userData = JSON.parse(localStorage.getItem("userData")) || {};
 	const [formData, setFormData] = useState({
 		builder_name: "",
@@ -66,54 +65,61 @@ import logo from "../../images/logo.png";import api from "../../assets/api";impo
 	};
 
 	// Handle form submission
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log("Submitting formData:", formData);
+const handleSubmit = async (e) => {
+	e.preventDefault();
+	console.log("Submitting formData:", formData);
 
-		try {
-			const response = await api.post(`/api/vessel-registration/${userData.id}/`, formData);
+	try {
+		const response = await api.post(`/api/vessel-registration/${userData.id}/`, formData);
 
-			if (response.status === 201) {
-				Swal.fire({
-					title: "Success!",
-					text: "Vessel registered successfully!",
-					icon: "success",
-					confirmButtonText: "OK",
-				});
-
-				// Reset the form
-				setFormData({
-					builder_name: "",
-					year_built: "",
-					place_built: "",
-					former_vessel_name: "",
-					former_owner: "",
-					hull_materials: "",
-					color: "",
-					length: "",
-					width: "",
-					depth: "",
-					draught: "",
-					gross_tonnage: "",
-					net_tonnage: "",
-					engine_make: "",
-					cycle: "",
-					horsepower: "",
-					cylinder_number: "",
-					number_of_engine: "",
-					owner: userData.id,
-				});
-			}
-		} catch (error) {
-			console.error("Error registering vessel:", error);
+		if (response.status === 201) {
 			Swal.fire({
-				title: "Error!",
-				text: "There was an error submitting the form. Please try again later.",
-				icon: "error",
+				title: "Success!",
+				text: "Vessel registered successfully!",
+				icon: "success",
 				confirmButtonText: "OK",
+			}).then(() => {
+				// Refresh the page after the alert is dismissed
+				window.location.reload();
+			});
+
+			// Reset the form
+			setFormData({
+				builder_name: "",
+				year_built: "",
+				place_built: "",
+				former_vessel_name: "",
+				former_owner: "",
+				hull_materials: "",
+				color: "",
+				length: "",
+				width: "",
+				depth: "",
+				draught: "",
+				gross_tonnage: "",
+				net_tonnage: "",
+				engine_make: "",
+				cycle: "",
+				horsepower: "",
+				cylinder_number: "",
+				number_of_engine: "",
+				owner: userData.id,
 			});
 		}
-	};
+	} catch (error) {
+		console.error("Error registering vessel:", error);
+		Swal.fire({
+			title: "Error!",
+			text: "There was an error submitting the form. Please try again later.",
+			icon: "error",
+			confirmButtonText: "OK",
+		}).then(() => {
+			// Optionally refresh the page after an error alert is dismissed
+			window.location.reload();
+		});
+	}
+};
+
 
 	if (loading) return <div>Loading...</div>;
 	return (
