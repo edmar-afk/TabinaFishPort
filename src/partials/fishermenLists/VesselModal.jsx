@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, Modal, Button } from "@mui/material";
+import { Box, Modal, Button, Alert } from "@mui/material";
 import api from "../../assets/api";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+
 function VesselModal({ vesselId, isOpen, onClose }) {
 	const [open, setOpen] = useState(isOpen);
 	const [vesselData, setVesselData] = useState(null);
-    
+	const [alertMessage, setAlertMessage] = useState("");
+
 	const handleClose = () => {
 		setOpen(false);
 		if (onClose) onClose();
@@ -26,6 +29,21 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 				});
 		}
 	}, [open, vesselId]);
+
+	// Grant the vessel registration
+	const grantRequest = () => {
+		api
+			.patch(`/api/vessel-registration/${vesselData.id}/grant/`)
+			.then((response) => {
+				// Update the permit data with the new status
+				setVesselData(response.data);
+				setAlertMessage("Vessel Registration has been successfully granted.");
+			})
+			.catch((error) => {
+				console.error("Failed to grant Vessel Registration:", error);
+				setAlertMessage("An error occurred while granting the registraiton.");
+			});
+	};
 
 	return (
 		<Modal
@@ -69,16 +87,58 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 								</tbody>
 							</table>
 						</div>
+
+						{/* Conditionally render the status and buttons */}
+						<div className="mt-4">
+							<div className="mb-4">
+								<Button
+									onClick={handleClose}
+									sx={{ mt: 2 }}
+									variant="outlined">
+									Close
+								</Button>
+
+								{/* Conditionally render buttons based on vessel status */}
+								{vesselData.status === "Pending" ? (
+									<Button
+										onClick={grantRequest}
+										variant="contained"
+										sx={{
+											mt: 2,
+											ml: 2,
+											backgroundColor: "blue",
+											color: "white",
+											"&:hover": { backgroundColor: "darkblue" },
+										}}>
+										Grant Request
+									</Button>
+								) : vesselData.status === "Granted" ? (
+									<Button
+										variant="contained"
+										sx={{
+											mt: 2,
+											ml: 2,
+											backgroundColor: "blue",
+											color: "white",
+											"&:hover": { backgroundColor: "darkblue" },
+										}}>
+										<LocalPrintshopIcon className="mr-1" /> Print
+									</Button>
+								) : null}
+							</div>
+
+							{/* Display a success message if the request is granted */}
+							{vesselData.status === "Granted" && (
+								<p className="bg-green-50 rounded-lg p-4 text-green-800">
+									This Vessel Registration has been granted by the LGU and can therefore be used as official
+									authorization to proceed with printing.
+								</p>
+							)}
+						</div>
 					</>
 				) : (
 					<div>Loading vessel details...</div>
 				)}
-				<Button
-					onClick={handleClose}
-					sx={{ mt: 2 }}
-					variant="outlined">
-					Close
-				</Button>
 			</Box>
 		</Modal>
 	);

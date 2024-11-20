@@ -468,10 +468,11 @@ function FishingPermit() {
 									type="number"
 									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
-									value={formData.amount}
+									value='900'
 									onChange={handleChange}
 									required
 								/>
+								<p className="text-xs text-orange-700 font-semibold">Please prepare an amount after you register</p>
 							</div>
 							<div className="w-full max-w-[150px] sm:max-w-[250px] mt-4">
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Fishing Gear Used:</label>

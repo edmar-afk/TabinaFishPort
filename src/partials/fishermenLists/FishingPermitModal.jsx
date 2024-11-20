@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";import { Box, Modal, Button } from "@mui/material";import api from "../../assets/api";function FishingPermitModal({ permitId, isOpen, onClose }) {
+import React, { useState, useEffect } from "react";
+import { Box, Modal, Button, Alert } from "@mui/material";
+import api from "../../assets/api";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+
+function FishingPermitModal({ permitId, isOpen, onClose }) {
 	const [open, setOpen] = useState(isOpen);
 	const [permitData, setPermitData] = useState(null);
 	const handleOpen = () => setOpen(true);
+	const [alertMessage, setAlertMessage] = useState("");
 	const handleClose = () => {
 		setOpen(false);
 		if (onClose) onClose(); // Trigger onClose if passed from parent
@@ -23,6 +29,21 @@ import React, { useState, useEffect } from "react";import { Box, Modal, Button }
 				});
 		}
 	}, [open, permitId]);
+
+	// Grant the fishing permit
+	const grantRequest = () => {
+		api
+			.patch(`/api/fishing-permits/${permitData.id}/grant/`)
+			.then((response) => {
+				// Update the permit data with the new status
+				setPermitData(response.data);
+				setAlertMessage("Fishing permit has been successfully granted.");
+			})
+			.catch((error) => {
+				console.error("Failed to grant fishing permit:", error);
+				setAlertMessage("An error occurred while granting the permit.");
+			});
+	};
 
 	return (
 		<div>
@@ -46,11 +67,10 @@ import React, { useState, useEffect } from "react";import { Box, Modal, Button }
 					}}>
 					{permitData ? (
 						<>
-							<div
-								variant="h6"
-								gutterBottom>
-								Fishing Permit Details
+							<div className="mb-4 text-lg text-gray-700 font-bold">
+								<p>Fishing Permit Details</p>
 							</div>
+
 							<div className="overflow-x-auto">
 								<table className="min-w-full table-auto border-collapse border border-gray-300">
 									<thead>
@@ -160,6 +180,15 @@ import React, { useState, useEffect } from "react";import { Box, Modal, Button }
 											<td className="px-4 py-2 font-semibold border border-gray-300">Fishing Gear Used:</td>
 											<td className="px-4 py-2 border border-gray-300">{permitData.fishing_gear_used}</td>
 										</tr>
+										<tr>
+											<td className="px-4 py-2 font-semibold border border-gray-300">Status:</td>
+											<td
+												className={`px-4 py-2 border border-gray-300 font-bold ${
+													permitData.status === "Pending" ? "text-orange-800" : "text-green-700"
+												}`}>
+												{permitData.status}
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -167,12 +196,57 @@ import React, { useState, useEffect } from "react";import { Box, Modal, Button }
 					) : (
 						<div>Loading permit details...</div>
 					)}
-					<Button
-						onClick={handleClose}
-						sx={{ mt: 2 }}
-						variant="outlined">
-						Close
-					</Button>
+					<div className="mb-4">
+						<Button
+							onClick={handleClose}
+							sx={{ mt: 2 }}
+							variant="outlined">
+							Close
+						</Button>
+
+						{/* Conditionally render the buttons based on the status */}
+						{permitData?.status === "Pending" ? (
+							<Button
+								onClick={grantRequest}
+								variant="contained"
+								sx={{
+									mt: 2,
+									ml: 2,
+									backgroundColor: "blue",
+									color: "white",
+									"&:hover": { backgroundColor: "darkblue" },
+								}}>
+								Grant Request
+							</Button>
+						) : permitData?.status === "Granted" ? (
+							<Button
+								variant="contained"
+								sx={{
+									mt: 2,
+									ml: 2,
+									backgroundColor: "blue",
+									color: "white",
+									"&:hover": { backgroundColor: "darkblue" },
+								}}>
+								<LocalPrintshopIcon className="mr-1" /> Print
+							</Button>
+						) : null}
+					</div>
+					{permitData?.status === "Granted" ? (
+						<p className="bg-green-50 rounded-lg p-4 text-green-800">
+							This permit has been granted by the LGU and can therefore be used as official authorization to proceed
+							with printing.
+						</p>
+					) : null}
+
+					{alertMessage && (
+						<Alert
+							severity="success"
+							onClose={() => setAlertMessage("")}
+							sx={{ mb: 2 }}>
+							{alertMessage}
+						</Alert>
+					)}
 				</Box>
 			</Modal>
 		</div>
