@@ -478,7 +478,7 @@ function FishingPermit() {
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Fishing Gear Used:</label>
 								<input
 									name="fishing_gear_used"
-									type="number"
+									type="text"
 									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 									value={formData.fishing_gear_used}
