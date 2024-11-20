@@ -337,7 +337,7 @@ function FishingPermit() {
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Engine Make:</label>
 								<input
 									name="engine"
-									type="number"
+									type="text"
 									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
 									value={formData.engine}
