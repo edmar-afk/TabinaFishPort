@@ -1,6 +1,4 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";import Swal from "sweetalert2";
 
 function FishingPermit() {
 	const [loading, setLoading] = useState(true); // Add loading state
@@ -29,6 +27,7 @@ function FishingPermit() {
 		date_issued: "",
 		amount: "",
 		fishing_gear_used: "",
+		status: "Pending",
 		owner: userData.id || "", // Add owner as userData.id
 	});
 
@@ -47,9 +46,11 @@ function FishingPermit() {
 			try {
 				const response = await api.get(`/api/fishing-permit/latest/${userData.id}/`);
 				if (response.status === 200 && response.data) {
+					// Ensure we only update the status if it's not already set to 'Pending'
 					setFormData((prevFormData) => ({
 						...prevFormData,
 						...response.data,
+						status: prevFormData.status === "Pending" ? "Pending" : response.data.status,
 					}));
 				}
 			} catch (error) {
@@ -64,7 +65,7 @@ function FishingPermit() {
 		} else {
 			setLoading(false); // If userData.id is not available, stop loading
 		}
-	}, [userData.id, userData.first_name]);
+	}, [userData.id, userData.first_name, formData.status]); // Add formData.status to dependencies to ensure proper updates
 
 	// Handle input change
 	const handleChange = (e) => {
@@ -79,9 +80,47 @@ function FishingPermit() {
 	const handleSubmit = async (event) => {
 		event.preventDefault(); // Prevent form submission default behavior
 
-		console.log("FormData before submit:", formData);
 		try {
-			// Post form data to the API
+			// Fetch the current permit status before proceeding
+			const response = await api.get(`/api/fishing-permit/latest/${userData.id}/`);
+			if (response.status === 200 && response.data) {
+				const permitStatus = response.data.status; // assuming the status field is 'status'
+
+				// If permit status is granted, warn the user before proceeding
+				if (permitStatus === "Granted") {
+					Swal.fire({
+						title: "Warning!",
+						text: 'If you proceed, the status of your fishing permit will be returned to "Pending". Do you want to continue?',
+						icon: "warning",
+						showCancelButton: true,
+						confirmButtonText: "Yes, proceed",
+						cancelButtonText: "No, cancel",
+					}).then(async (result) => {
+						if (result.isConfirmed) {
+							// Proceed with the form submission
+							await submitForm(); // Call the existing form submission function
+						}
+					});
+				} else {
+					// If the permit is not granted, proceed with normal registration
+					await submitForm();
+				}
+			}
+		} catch (error) {
+			console.error("Error checking permit status:", error);
+			Swal.fire({
+				title: "Error!",
+				text: "There was an error checking the permit status. Please try again.",
+				icon: "error",
+				confirmButtonText: "OK",
+			});
+		}
+	};
+
+	// Separate function to submit the form
+	const submitForm = async () => {
+		try {
+			console.log("FormData before submit:", formData);
 			const response = await api.post(`/api/register-fishing-permit/${userData.id}/`, formData);
 			if (response.status === 201) {
 				Swal.fire({
@@ -92,36 +131,6 @@ function FishingPermit() {
 				}).then(() => {
 					// Refresh the page after the alert is closed
 					window.location.reload();
-				});
-
-				// Optionally clear form after submission
-				setFormData({
-					address: "",
-					home_port: "",
-					vessel_name: "",
-					vessel_type: "",
-					color: "",
-					service_type: "",
-					vessel_description: "",
-					length: "",
-					breadth: "",
-					depth: "",
-					draught: "",
-					gross: "",
-					net: "",
-					engine: "",
-					serial_num: "",
-					horse_power: "",
-					cylinder_num: "",
-					engine_num: "",
-					crew_num: "",
-					coast_guard_num: "",
-					mfvr_num: "",
-					or_num: "",
-					date_issued: "",
-					amount: "",
-					fishing_gear_used: "",
-					owner: userData.id, // Retain owner ID after submission
 				});
 			}
 		} catch (error) {
@@ -134,7 +143,6 @@ function FishingPermit() {
 			});
 		}
 	};
-
 
 	if (loading) return <div>Loading...</div>;
 	return (
@@ -468,7 +476,7 @@ function FishingPermit() {
 									type="number"
 									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									placeholder=""
-									value='900'
+									value="900"
 									onChange={handleChange}
 									required
 								/>

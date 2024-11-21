@@ -1,4 +1,11 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";import Swal from "sweetalert2";function VesselReg() {	const [loading, setLoading] = useState(true);
+import logo from "../../images/logo.png";
+import api from "../../assets/api";
+import { useState, useEffect } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+function VesselReg() {
+	const [loading, setLoading] = useState(true);
 	const userData = JSON.parse(localStorage.getItem("userData")) || {};
 	const [formData, setFormData] = useState({
 		builder_name: "",
@@ -20,6 +27,7 @@ import logo from "../../images/logo.png";import api from "../../assets/api";impo
 		cylinder_number: "",
 		number_of_engine: "",
 		owner: userData.id || "",
+		status: "Pending", // Add initial status
 	});
 
 	useEffect(() => {
@@ -37,13 +45,15 @@ import logo from "../../images/logo.png";import api from "../../assets/api";impo
 			try {
 				const response = await api.get(`/api/vessel-registration/latest/${userData.id}/`);
 				if (response.status === 200 && response.data) {
+					// Check if the status is Pending, and don't overwrite it
 					setFormData((prevFormData) => ({
 						...prevFormData,
 						...response.data,
+						status: prevFormData.status === "Pending" ? "Pending" : response.data.status,
 					}));
 				}
 			} catch (error) {
-				console.error("Error fetching fishing permit:", error);
+				console.error("Error fetching vessel registration:", error);
 			} finally {
 				setLoading(false); // Set loading to false once data has been fetched
 			}
@@ -54,7 +64,8 @@ import logo from "../../images/logo.png";import api from "../../assets/api";impo
 		} else {
 			setLoading(false); // If userData.id is not available, stop loading
 		}
-	}, [userData.id, userData.first_name]);
+	}, [userData.id, userData.first_name, formData.status]);
+
 	// Handle input change
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -65,61 +76,99 @@ import logo from "../../images/logo.png";import api from "../../assets/api";impo
 	};
 
 	// Handle form submission
-const handleSubmit = async (e) => {
-	e.preventDefault();
-	console.log("Submitting formData:", formData);
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log("Submitting formData:", formData);
 
-	try {
-		const response = await api.post(`/api/vessel-registration/${userData.id}/`, formData);
+		try {
+			// Fetch current registration status before submitting the form
+			const response = await api.get(`/api/vessel-registration/latest/${userData.id}/`);
+			if (response.status === 200 && response.data) {
+				const vesselStatus = response.data.status; // assuming the status field is 'status'
 
-		if (response.status === 201) {
+				// If vessel status is not 'Pending', warn the user
+				if (vesselStatus !== "Pending") {
+					Swal.fire({
+						title: "Warning!",
+						text: 'If you proceed, the status of your vessel registration will be returned to "Pending". Do you want to continue?',
+						icon: "warning",
+						showCancelButton: true,
+						confirmButtonText: "Yes, proceed",
+						cancelButtonText: "No, cancel",
+					}).then(async (result) => {
+						if (result.isConfirmed) {
+							// Proceed with the form submission
+							await submitForm();
+						}
+					});
+				} else {
+					// If the status is 'Pending', just submit the form
+					await submitForm();
+				}
+			}
+		} catch (error) {
+			console.error("Error checking vessel status:", error);
 			Swal.fire({
-				title: "Success!",
-				text: "Vessel registered successfully!",
-				icon: "success",
+				title: "Error!",
+				text: "There was an error checking the vessel status. Please try again.",
+				icon: "error",
 				confirmButtonText: "OK",
-			}).then(() => {
-				// Refresh the page after the alert is dismissed
-				window.location.reload();
-			});
-
-			// Reset the form
-			setFormData({
-				builder_name: "",
-				year_built: "",
-				place_built: "",
-				former_vessel_name: "",
-				former_owner: "",
-				hull_materials: "",
-				color: "",
-				length: "",
-				width: "",
-				depth: "",
-				draught: "",
-				gross_tonnage: "",
-				net_tonnage: "",
-				engine_make: "",
-				cycle: "",
-				horsepower: "",
-				cylinder_number: "",
-				number_of_engine: "",
-				owner: userData.id,
 			});
 		}
-	} catch (error) {
-		console.error("Error registering vessel:", error);
-		Swal.fire({
-			title: "Error!",
-			text: "There was an error submitting the form. Please try again later.",
-			icon: "error",
-			confirmButtonText: "OK",
-		}).then(() => {
-			// Optionally refresh the page after an error alert is dismissed
-			window.location.reload();
-		});
-	}
-};
+	};
 
+	// Separate function to submit the form
+	const submitForm = async () => {
+		try {
+			console.log("FormData before submit:", formData);
+			const response = await api.post(`/api/vessel-registration/${userData.id}/`, formData);
+			if (response.status === 201) {
+				Swal.fire({
+					title: "Success!",
+					text: "Vessel registered successfully!",
+					icon: "success",
+					confirmButtonText: "OK",
+				}).then(() => {
+					// Refresh the page after the alert is dismissed
+					window.location.reload();
+				});
+
+				// Reset the form
+				setFormData({
+					builder_name: "",
+					year_built: "",
+					place_built: "",
+					former_vessel_name: "",
+					former_owner: "",
+					hull_materials: "",
+					color: "",
+					length: "",
+					width: "",
+					depth: "",
+					draught: "",
+					gross_tonnage: "",
+					net_tonnage: "",
+					engine_make: "",
+					cycle: "",
+					horsepower: "",
+					cylinder_number: "",
+					number_of_engine: "",
+					owner: userData.id,
+				});
+			}
+		} catch (error) {
+			console.error("Error registering vessel:", error);
+			Swal.fire({
+				title: "Error!",
+				text: "There was an error submitting the form. Please try again later.",
+				icon: "error",
+				confirmButtonText: "OK",
+			}).then(() => {
+				// Optionally refresh the page after an error alert is dismissed
+				window.location.reload();
+			});
+		}
+	};
 
 	if (loading) return <div>Loading...</div>;
 	return (
