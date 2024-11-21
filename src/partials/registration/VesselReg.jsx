@@ -1,6 +1,4 @@
-import logo from "../../images/logo.png";
-import api from "../../assets/api";
-import { useState, useEffect } from "react";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -28,6 +26,7 @@ function VesselReg() {
 		number_of_engine: "",
 		owner: userData.id || "",
 		status: "Pending", // Add initial status
+		amount: 554
 	});
 
 	useEffect(() => {
@@ -48,9 +47,10 @@ function VesselReg() {
 					// Check if the status is Pending, and don't overwrite it
 					setFormData((prevFormData) => ({
 						...prevFormData,
-						...response.data,
+						amount: response.data.amount || prevFormData.amount,
 						status: prevFormData.status === "Pending" ? "Pending" : response.data.status,
 					}));
+
 				}
 			} catch (error) {
 				console.error("Error fetching vessel registration:", error);
@@ -86,11 +86,11 @@ function VesselReg() {
 			if (response.status === 200 && response.data) {
 				const vesselStatus = response.data.status; // assuming the status field is 'status'
 
-				// If vessel status is not 'Pending', warn the user
+				// If the vessel status is not 'Pending', warn the user
 				if (vesselStatus !== "Pending") {
 					Swal.fire({
 						title: "Warning!",
-						text: 'If you proceed, the status of your vessel registration will be returned to "Pending". Do you want to continue?',
+						text: 'If you proceed, the status of your vessel registration will be "Pending". Do you want to continue?',
 						icon: "warning",
 						showCancelButton: true,
 						confirmButtonText: "Yes, proceed",
@@ -98,7 +98,7 @@ function VesselReg() {
 					}).then(async (result) => {
 						if (result.isConfirmed) {
 							// Proceed with the form submission
-							await submitForm();
+							await submitForm(); // Call your existing submit function
 						}
 					});
 				} else {
@@ -116,6 +116,7 @@ function VesselReg() {
 			});
 		}
 	};
+
 
 	// Separate function to submit the form
 	const submitForm = async () => {

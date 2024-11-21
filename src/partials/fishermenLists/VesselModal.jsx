@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Box, Modal, Button, Alert } from "@mui/material";
+import React, { useState, useEffect } from "react";import { Box, Modal, Button, Alert } from "@mui/material";
 import api from "../../assets/api";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 
@@ -35,14 +34,24 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 		api
 			.patch(`/api/vessel-registration/${vesselData.id}/grant/`)
 			.then((response) => {
-				// Update the permit data with the new status
 				setVesselData(response.data);
 				setAlertMessage("Vessel Registration has been successfully granted.");
 			})
 			.catch((error) => {
 				console.error("Failed to grant Vessel Registration:", error);
-				setAlertMessage("An error occurred while granting the registraiton.");
+				setAlertMessage("An error occurred while granting the registration.");
 			});
+	};
+
+	// Handle Print functionality
+	const handlePrint = () => {
+		const content = document.getElementById("vesselDetailsTable");
+		const printWindow = window.open("", "_blank");
+		printWindow.document.write("<html><head><title>Vessel Registration</title></head><body>");
+		printWindow.document.write(content.innerHTML);
+		printWindow.document.write("</body></html>");
+		printWindow.document.close();
+		printWindow.print();
 	};
 
 	return (
@@ -67,7 +76,9 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 				{vesselData ? (
 					<>
 						<div className="text-xl font-semibold mb-4">Vessel Registration Details</div>
-						<div className="overflow-x-auto">
+						<div
+							className="overflow-x-auto"
+							id="vesselDetailsTable">
 							<table className="min-w-full table-auto border-collapse border border-gray-300">
 								<thead>
 									<tr>
@@ -88,7 +99,6 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 							</table>
 						</div>
 
-						{/* Conditionally render the status and buttons */}
 						<div className="mt-4">
 							<div className="mb-4">
 								<Button
@@ -114,6 +124,7 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 									</Button>
 								) : vesselData.status === "Granted" ? (
 									<Button
+										onClick={handlePrint}
 										variant="contained"
 										sx={{
 											mt: 2,

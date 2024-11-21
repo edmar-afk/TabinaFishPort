@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Box, Modal, Button, Alert } from "@mui/material";
-import api from "../../assets/api";
-import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import React, { useState, useEffect } from "react";import { Box, Modal, Button, Alert } from "@mui/material";import api from "../../assets/api";import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 
 function FishingPermitModal({ permitId, isOpen, onClose }) {
 	const [open, setOpen] = useState(isOpen);
@@ -45,6 +42,17 @@ function FishingPermitModal({ permitId, isOpen, onClose }) {
 			});
 	};
 
+	// Handle Print functionality
+	const handlePrint = () => {
+		const content = document.getElementById("permitDetailsTable");
+		const printWindow = window.open("", "_blank");
+		printWindow.document.write("<html><head><title>Fishing Permit</title></head><body>");
+		printWindow.document.write(content.innerHTML);
+		printWindow.document.write("</body></html>");
+		printWindow.document.close();
+		printWindow.print();
+	};
+
 	return (
 		<div>
 			<Modal
@@ -72,7 +80,9 @@ function FishingPermitModal({ permitId, isOpen, onClose }) {
 							</div>
 
 							<div className="overflow-x-auto">
-								<table className="min-w-full table-auto border-collapse border border-gray-300">
+								<table
+									id="permitDetailsTable"
+									className="min-w-full table-auto border-collapse border border-gray-300">
 									<thead>
 										<tr>
 											<th className="px-4 py-2 text-left border border-gray-300">Fields</th>
@@ -220,6 +230,7 @@ function FishingPermitModal({ permitId, isOpen, onClose }) {
 							</Button>
 						) : permitData?.status === "Granted" ? (
 							<Button
+								onClick={handlePrint}
 								variant="contained"
 								sx={{
 									mt: 2,

@@ -1,4 +1,6 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";import Swal from "sweetalert2";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function FishingPermit() {
 	const [loading, setLoading] = useState(true); // Add loading state
@@ -25,7 +27,7 @@ function FishingPermit() {
 		mfvr_num: "",
 		or_num: "",
 		date_issued: "",
-		amount: "",
+		amount: 760,
 		fishing_gear_used: "",
 		status: "Pending",
 		owner: userData.id || "", // Add owner as userData.id
@@ -34,11 +36,10 @@ function FishingPermit() {
 	useEffect(() => {
 		const userData = JSON.parse(localStorage.getItem("userData")) || {};
 
-		// Update formData if userData is available and formData.owner_name hasn't been set yet
 		if (userData.first_name && formData.owner_name !== userData.first_name) {
 			setFormData((prevFormData) => ({
 				...prevFormData,
-				owner_name: userData.first_name, // Set the owner's first name
+				owner_name: userData.first_name,
 			}));
 		}
 
@@ -46,26 +47,27 @@ function FishingPermit() {
 			try {
 				const response = await api.get(`/api/fishing-permit/latest/${userData.id}/`);
 				if (response.status === 200 && response.data) {
-					// Ensure we only update the status if it's not already set to 'Pending'
 					setFormData((prevFormData) => ({
 						...prevFormData,
 						...response.data,
+						amount: response.data.amount || 760, // Dynamically set amount if available
 						status: prevFormData.status === "Pending" ? "Pending" : response.data.status,
 					}));
 				}
 			} catch (error) {
 				console.error("Error fetching fishing permit:", error);
 			} finally {
-				setLoading(false); // Set loading to false once data has been fetched
+				setLoading(false);
 			}
 		};
 
 		if (userData.id) {
 			fetchLatestPermit();
 		} else {
-			setLoading(false); // If userData.id is not available, stop loading
+			setLoading(false); // Stop loading if no userData.id
 		}
-	}, [userData.id, userData.first_name, formData.status]); // Add formData.status to dependencies to ensure proper updates
+	}, [userData.id, userData.first_name, formData.status]);
+
 
 	// Handle input change
 	const handleChange = (e) => {
@@ -90,7 +92,7 @@ function FishingPermit() {
 				if (permitStatus === "Granted") {
 					Swal.fire({
 						title: "Warning!",
-						text: 'If you proceed, the status of your fishing permit will be returned to "Pending". Do you want to continue?',
+						text: 'If you proceed, the status of your fishing permit will be "Pending". Do you want to continue?',
 						icon: "warning",
 						showCancelButton: true,
 						confirmButtonText: "Yes, proceed",
@@ -475,10 +477,10 @@ function FishingPermit() {
 									name="amount"
 									type="number"
 									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
-									placeholder=""
-									value="900"
+									placeholder="760"
+									value="760"
 									onChange={handleChange}
-									required
+									disabled
 								/>
 								<p className="text-xs text-orange-700 font-semibold">Please prepare an amount after you register</p>
 							</div>
