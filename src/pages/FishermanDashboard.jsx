@@ -55,7 +55,7 @@ function FishermanDashboard() {
 				<div className="h-screen">
 					<div className="max-w-5xl mx-auto text-center relative px-4 sm:px-10 pt-24">
 						<h1 className="lg:text-5xl md:text-3xl text-4xl font-semibold md:!leading-[80px]">
-							Welcome, {userData.first_name}. You're one step to becoming a fisherman.
+							Welcome, {userData.first_name}. You're one step to becoming a Registered Fisherman.
 						</h1>
 						<Link
 							to={"/logout"}

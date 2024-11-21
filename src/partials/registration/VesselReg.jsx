@@ -1,11 +1,13 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 function VesselReg() {
 	const [loading, setLoading] = useState(true);
 	const userData = JSON.parse(localStorage.getItem("userData")) || {};
 	const [formData, setFormData] = useState({
+		vessel_name: "",
+		service_type: "",
+		home_port: "",
 		builder_name: "",
 		year_built: "",
 		place_built: "",
@@ -26,9 +28,9 @@ function VesselReg() {
 		number_of_engine: "",
 		owner: userData.id || "",
 		status: "Pending", // Add initial status
-		amount: 554
+		amount: 554,
 	});
-
+	console.log(formData);
 	useEffect(() => {
 		const userData = JSON.parse(localStorage.getItem("userData")) || {};
 
@@ -43,19 +45,40 @@ function VesselReg() {
 		const fetchLatestPermit = async () => {
 			try {
 				const response = await api.get(`/api/vessel-registration/latest/${userData.id}/`);
+				console.log(response); // Log the response to inspect the data
 				if (response.status === 200 && response.data) {
-					// Check if the status is Pending, and don't overwrite it
+					// Update formData if valid data is returned
 					setFormData((prevFormData) => ({
 						...prevFormData,
 						amount: response.data.amount || prevFormData.amount,
 						status: prevFormData.status === "Pending" ? "Pending" : response.data.status,
+						vessel_name: response.data.vessel_name || prevFormData.vessel_name,
+						service_type: response.data.service_type || prevFormData.service_type,
+						home_port: response.data.home_port || prevFormData.home_port,
+						builder_name: response.data.builder_name || prevFormData.builder_name,
+						year_built: response.data.year_built || prevFormData.year_built,
+						place_built: response.data.place_built || prevFormData.place_built,
+						former_vessel_name: response.data.former_vessel_name || prevFormData.former_vessel_name,
+						former_owner: response.data.former_owner || prevFormData.former_owner,
+						hull_materials: response.data.hull_materials || prevFormData.hull_materials,
+						color: response.data.color || prevFormData.color,
+						length: response.data.length || prevFormData.length,
+						width: response.data.width || prevFormData.width,
+						depth: response.data.depth || prevFormData.depth,
+						draught: response.data.draught || prevFormData.draught,
+						gross_tonnage: response.data.gross_tonnage || prevFormData.gross_tonnage,
+						net_tonnage: response.data.net_tonnage || prevFormData.net_tonnage,
+						engine_make: response.data.engine_make || prevFormData.engine_make,
+						cycle: response.data.cycle || prevFormData.cycle,
+						horsepower: response.data.horsepower || prevFormData.horsepower,
+						cylinder_number: response.data.cylinder_number || prevFormData.cylinder_number,
+						number_of_engine: response.data.number_of_engine || prevFormData.number_of_engine,
 					}));
-
 				}
 			} catch (error) {
 				console.error("Error fetching vessel registration:", error);
 			} finally {
-				setLoading(false); // Set loading to false once data has been fetched
+				setLoading(false); // Set loading to false after fetching data
 			}
 		};
 
@@ -117,7 +140,6 @@ function VesselReg() {
 		}
 	};
 
-
 	// Separate function to submit the form
 	const submitForm = async () => {
 		try {
@@ -136,6 +158,9 @@ function VesselReg() {
 
 				// Reset the form
 				setFormData({
+					vessel_name: "",
+					service_type: "",
+					home_port: "",
 					builder_name: "",
 					year_built: "",
 					place_built: "",
@@ -190,6 +215,43 @@ function VesselReg() {
 								<ArrowBackIcon fontSize="small" />
 								<p>Go back</p>
 							</Link>
+						</div>
+						<div>
+							<label className="text-gray-800 dark:text-white text-sm mb-0 block">Name of Vessel:</label>
+							<input
+								name="vessel_name"
+								type="text"
+								className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
+								placeholder={userData.vessel_name}
+								value={formData.vessel_name}
+								onChange={handleChange}
+							/>
+						</div>
+						<div className="grid grid-cols-2 gap-6 mt-3">
+							<div className="w-full">
+								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Type of Service:</label>
+								<input
+									name="service_type"
+									type="text"
+									className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
+									placeholder=""
+									value={formData.service_type}
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div>
+								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Home Port:</label>
+								<input
+									name="home_port"
+									type="text"
+									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
+									placeholder="Enter name"
+									value={formData.home_port}
+									onChange={handleChange}
+									required
+								/>
+							</div>
 						</div>
 
 						<p className="font-bold text-gray-800 dark:text-white text-lg sm:text-3xl mb-2 mt-16 uppercase text-left">

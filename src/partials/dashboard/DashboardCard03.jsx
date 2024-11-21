@@ -11,26 +11,30 @@ function DashboardCard03() {
 	useEffect(() => {
 		// Fetch the total amount for fishing permits
 		api
-			.get("/api/fishing-permit-income/") // Correct endpoint for fishing permits
+			.get("/api/fishing-permit-income/")
 			.then((response) => {
-				setTotalAmountFishing(response.data.total_amount_granted); // Set total for fishing permits
+				setTotalAmountFishing(response.data.total_amount_granted);
 			})
 			.catch((error) => {
 				console.error("Error fetching fishing permit income:", error);
-				setTotalAmountFishing(0); // Set to 0 if there's an error
+				setTotalAmountFishing(0);
 			});
 
 		// Fetch the total amount for vessel registrations
 		api
-			.get("/api/vessel-registration-income/") // Correct endpoint for vessel registrations
+			.get("/api/vessel-registration-income/")
 			.then((response) => {
-				setTotalAmountVessel(response.data.total_amount_active); // Set total for vessel registrations
+				setTotalAmountVessel(response.data.total_amount_active);
 			})
 			.catch((error) => {
 				console.error("Error fetching vessel registration income:", error);
-				setTotalAmountVessel(0); // Set to 0 if there's an error
+				setTotalAmountVessel(0);
 			});
 	}, []);
+
+	// Calculate division results
+	const fishingPermitDivision = (totalAmountFishing / 760)
+	const vesselDivision = (totalAmountVessel / 554)
 
 	return (
 		<div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
@@ -40,12 +44,15 @@ function DashboardCard03() {
 				</header>
 				<div className="flex flex-row justify-between">
 					<div>
-						<div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Fishing Permits</div>
+						<div className="text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase mb-1">
+							<p>Fishing Permits</p>
+							<p className="text-left">₱760.00 x {fishingPermitDivision} Permits =</p>
+						</div>
 						<div className="flex items-start">
 							<div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
 								₱
 								<CountUp
-									end={totalAmountFishing} // Dynamically set the end value for fishing permits
+									end={totalAmountFishing}
 									duration={2.75}
 									separator=","
 									prefix=""
@@ -55,14 +62,15 @@ function DashboardCard03() {
 					</div>
 
 					<div>
-						<div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">
-							Vessel Registrations
+						<div className="text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase mb-1">
+							<p>Vessel Registrations</p>
+							<p className="text-right">₱554.00 x {vesselDivision} vessels =</p>
 						</div>
 						<div className="flex justify-end">
 							<div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
 								₱
 								<CountUp
-									end={totalAmountVessel} // Dynamically set the end value for vessel registrations
+									end={totalAmountVessel}
 									duration={2.75}
 									separator=","
 									prefix=""

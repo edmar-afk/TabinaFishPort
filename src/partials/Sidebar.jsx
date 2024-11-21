@@ -80,7 +80,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 
 					<NavLink
 						end
-						to="/"
+						to="/dashboard"
 						className="-ml-3 flex flex-row items-center">
 						<img
 							src={logo}
@@ -155,8 +155,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 									</div>
 								</NavLink>
 							</li>
-
-							
 
 							<h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3 mt-8 mb-2">
 								<span

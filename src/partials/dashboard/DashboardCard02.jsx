@@ -67,20 +67,7 @@ function DashboardCard02() {
 							</div>
 						</div>
 
-						<div>
-							<div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">
-								Total Fish Income
-							</div>
-							<div className="flex justify-end">
-								<div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
-									<CountUp
-										end={totalPrice} // Dynamically display the fetched total price
-										duration={2.75}
-										prefix="₱" // Optional: Display dollar sign for price
-									/>
-								</div>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 				<div className="grow max-sm:max-h-[128px] max-h-[128px] relative ocean">

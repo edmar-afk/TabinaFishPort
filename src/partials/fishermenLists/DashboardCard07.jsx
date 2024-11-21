@@ -86,6 +86,38 @@ const DashboardCard07 = ({ isListPage }) => {
 		fetchFishermenAndData();
 	}, []);
 
+
+	const handleDeleteFisherman = async (fishermanId) => {
+		try {
+			// Show a confirmation dialog
+			const result = await Swal.fire({
+				title: "Are you sure?",
+				text: "This will delete the fisherman and their associated data.",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Yes, delete it!",
+				cancelButtonText: "Cancel",
+			});
+
+			if (result.isConfirmed) {
+				// Make the API call to delete the fisherman
+				await api.delete(`/api/users/delete/${fishermanId}/`);
+
+				// Update the state by removing the deleted fisherman
+				setFishermen((prevFishermen) => prevFishermen.filter((fisherman) => fisherman.id !== fishermanId));
+
+				// Show success alert
+				Swal.fire("Deleted!", "The fisherman has been deleted.", "success");
+			}
+		} catch (error) {
+			console.error("Error deleting fisherman:", error);
+			Swal.fire("Error!", "There was an error deleting the fisherman.", "error");
+		}
+	};
+
+
+
+
 	return (
 		<div className="col-span-full bg-white dark:bg-gray-800 shadow-sm rounded-xl">
 			<header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
@@ -105,9 +137,10 @@ const DashboardCard07 = ({ isListPage }) => {
 								<th className="p-2">
 									<div className="font-semibold text-center">Fishing Permit Registration</div>
 								</th>
-								<th className="p-2">
-									<div className="font-semibold text-center">Action</div>
-								</th>
+								{isListPage && (
+									<th className="p-2">
+										<div className="font-semibold text-center">Action</div>
+									</th>)}
 							</tr>
 						</thead>
 						<tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
