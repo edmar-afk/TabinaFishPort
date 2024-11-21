@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";import SailingIcon from "@mui/icons-material/Sailing";import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";
+import SailingIcon from "@mui/icons-material/Sailing";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import fishermanBg from "../images/fishermanbg.jpg";
 import { Link } from "react-router-dom";
 import api from "../assets/api";
-
+import ProfileModal from "../partials/profile/ProfileModal";
 function FishermanDashboard() {
-	const userData = JSON.parse(localStorage.getItem("userData")) || {};
+	const userData = JSON.parse(localStorage.getItem("userData"));
 	const [permitStatus, setPermitStatus] = useState(null); // State to store fishing permit status
 	const [vesselStatus, setVesselStatus] = useState(null); // State to store vessel status
 	const [loadingPermit, setLoadingPermit] = useState(true); // State for permit loading
@@ -46,6 +48,10 @@ function FishermanDashboard() {
 
 	return (
 		<>
+			<div className="absolute z-50 p-2 top-4 left-4 rounded-full flex flex-col items-center">
+				<ProfileModal userId={userData.id} />
+				<p>Profile</p>
+			</div>
 			<img
 				src={fishermanBg}
 				alt=""

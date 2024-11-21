@@ -174,8 +174,7 @@ function FishingPermit() {
 									name=""
 									type="text"
 									className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg border-2 border-orange-700"
-									placeholder={userData.first_name}
-									value={userData.first_name} // Use formData.owner_name instead
+									value={formData.owner_name} // Use formData.owner_name instead
 									onChange={handleChange}
 									disabled
 								/>

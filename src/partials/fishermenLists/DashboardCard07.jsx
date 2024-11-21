@@ -17,6 +17,7 @@ const DashboardCard07 = ({ isListPage }) => {
 	const [vesselRegistrations, setVesselRegistrations] = useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedPermitId, setSelectedPermitId] = useState(null);
+	const [searchQuery, setSearchQuery] = useState(""); // Step 1: Add state for search query
 
 	const openModal = (permitId) => {
 		setSelectedPermitId(permitId);
@@ -86,7 +87,6 @@ const DashboardCard07 = ({ isListPage }) => {
 		fetchFishermenAndData();
 	}, []);
 
-
 	const handleDeleteFisherman = async (fishermanId) => {
 		try {
 			// Show a confirmation dialog
@@ -115,13 +115,30 @@ const DashboardCard07 = ({ isListPage }) => {
 		}
 	};
 
-
-
+	// Step 2: Filter fishermen based on search query
+	const filteredFishermen = fishermen.filter((fisherman) =>
+		fisherman.first_name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
 
 	return (
 		<div className="col-span-full bg-white dark:bg-gray-800 shadow-sm rounded-xl">
-			<header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
+			<header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex flex-row justify-between items-center flex-wrap">
 				<h2 className="font-semibold text-gray-800 dark:text-gray-100">Registered Fishermen</h2>
+
+				<div className="flex border-2 border-blue-500 overflow-hidden max-w-md">
+					<input
+						type="text"
+						placeholder="Search by Name..."
+						className="w-full outline-none bg-white text-gray-600 text-sm px-4 py-3"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)} // Step 3: Update the search query
+					/>
+					<button
+						type="button"
+						className="flex items-center justify-center bg-[#007bff] px-5 text-sm text-white">
+						Search
+					</button>
+				</div>
 			</header>
 			<div className="p-3">
 				<div className="overflow-x-auto">
@@ -132,74 +149,103 @@ const DashboardCard07 = ({ isListPage }) => {
 									<div className="font-semibold text-left">Name</div>
 								</th>
 								<th className="p-2">
-									<div className="font-semibold text-center">Vessel Registration</div>
+									<div className="font-semibold text-center">
+										{isListPage ? "Vessel Registration" : "Mobile Number"}
+									</div>
 								</th>
 								<th className="p-2">
-									<div className="font-semibold text-center">Fishing Permit Registration</div>
+									<div className="font-semibold text-center">
+										{isListPage ? "Fishing Permit Registration" : "Date Account Created"}
+									</div>
 								</th>
 								{isListPage && (
 									<th className="p-2">
 										<div className="font-semibold text-center">Action</div>
-									</th>)}
+									</th>
+								)}
 							</tr>
 						</thead>
 						<tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
-							{fishermen.map((fisherman) => (
-								<tr key={fisherman.id}>
-									<td className="p-2">
-										<div className="flex items-center">
-											<img
-												src={me}
-												className="w-10 rounded-full mr-2"
-												alt=""
-											/>
-											<div className="text-gray-800 dark:text-gray-100">{fisherman.first_name}</div>
-										</div>
-									</td>
-									<td className="p-2">
-										<div className="text-center">
-											{vesselRegistrations[fisherman.id]?.id ? (
-												<div
-													className="cursor-pointer flex items-center justify-center gap-1"
-													onClick={() => openVesselModal(vesselRegistrations[fisherman.id].id)}>
-													<SailingIcon />
-													<span className="text-blue-600 dark:text-blue-300">View Vessel</span>
-												</div>
-											) : (
-												"No Registration"
-											)}
-										</div>
-									</td>
-									<td className="p-2">
-										<div className="text-center">
-											{fishingPermits[fisherman.id] ? (
-												<div
-													className="cursor-pointer"
-													onClick={() => openModal(fishingPermits[fisherman.id])}>
-													<PhishingIcon />
-													<span className="text-blue-600 dark:text-blue-300">View Permit</span>
-												</div>
-											) : (
-												"No Permit"
-											)}
-										</div>
-									</td>
-									<td className="p-2 flex justify-evenly">
-										{isListPage && (
-											<a
-												href="#"
-												className="text-center text-red-400 flex items-center"
-												onClick={() => handleDeleteFisherman(fisherman.id)}>
-												<DeleteForeverOutlinedIcon
-													fontSize="small"
-													className="mr-1"
+							{filteredFishermen.map(
+								(
+									fisherman // Step 2: Use filtered fishermen
+								) => (
+									<tr key={fisherman.id}>
+										<td className="p-2">
+											<div className="flex items-center">
+												<img
+													src={me}
+													className="w-10 rounded-full mr-2"
+													alt=""
 												/>
-												Delete
-											</a>
-										)}
-									</td>
-								</tr>
-							))}
+												<div className="text-gray-800 dark:text-gray-100">{fisherman.first_name}</div>
+											</div>
+										</td>
+										<td className="p-2">
+											<div className="text-center">
+												{isListPage ? (
+													vesselRegistrations[fisherman.id]?.id ? (
+														<div
+															className="cursor-pointer flex items-center justify-center gap-1"
+															onClick={() => openVesselModal(vesselRegistrations[fisherman.id].id)}>
+															<SailingIcon />
+															<span className="text-blue-600 dark:text-blue-300">View Vessel</span>
+														</div>
+													) : (
+														"No Registration"
+													)
+												) : (
+													<p>{fisherman.username}</p>
+												)}
+											</div>
+										</td>
+										<td className="p-2">
+											<div className="text-center">
+												{isListPage ? (
+													fishingPermits[fisherman.id] ? (
+														<div
+															className="cursor-pointer"
+															onClick={() => openModal(fishingPermits[fisherman.id])}>
+															<PhishingIcon />
+															<span className="text-blue-600 dark:text-blue-300">View Permit</span>
+														</div>
+													) : (
+														"No Permit"
+													)
+												) : (
+													<p>
+														{new Date(fisherman.date_joined).toLocaleDateString("en-GB", {
+															day: "2-digit",
+															month: "short",
+															year: "numeric",
+														})}{" "}
+														-
+														{new Date(fisherman.date_joined).toLocaleTimeString("en-GB", {
+															hour: "2-digit",
+															minute: "2-digit",
+															hour12: true,
+														})}
+													</p>
+												)}
+											</div>
+										</td>
+										<td className="p-2 flex justify-evenly">
+											{isListPage && (
+												<a
+													href="#"
+													className="text-center text-red-400 flex items-center"
+													onClick={() => handleDeleteFisherman(fisherman.id)}>
+													<DeleteForeverOutlinedIcon
+														fontSize="small"
+														className="mr-1"
+													/>
+													Delete
+												</a>
+											)}
+										</td>
+									</tr>
+								)
+							)}
 						</tbody>
 					</table>
 				</div>
