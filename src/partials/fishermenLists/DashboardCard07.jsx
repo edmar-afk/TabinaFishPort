@@ -148,11 +148,15 @@ const DashboardCard07 = ({ isListPage }) => {
 								<th className="p-2">
 									<div className="font-semibold text-left">Name</div>
 								</th>
-								<th className="p-2">
-									<div className="font-semibold text-center">
-										{isListPage ? "Vessel Registration" : "Mobile Number"}
-									</div>
+								<th>
+									<div className="font-semibold text-center">Mobile Number</div>
 								</th>
+								{isListPage && (
+									<th className="p-2">
+										<div className="font-semibold text-center">Vessel Registration</div>
+									</th>
+								)}
+
 								<th className="p-2">
 									<div className="font-semibold text-center">
 										{isListPage ? "Fishing Permit Registration" : "Date Account Created"}
@@ -179,6 +183,11 @@ const DashboardCard07 = ({ isListPage }) => {
 													alt=""
 												/>
 												<div className="text-gray-800 dark:text-gray-100">{fisherman.first_name}</div>
+											</div>
+										</td>
+										<td className="p-2">
+											<div className="text-center">
+												<p>{fisherman.username}</p>
 											</div>
 										</td>
 										<td className="p-2">

@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";import { Box, Modal, Button } from "@mui/material";import api from "../../assets/api";import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";import html2canvas from "html2canvas";import vesselImage from "../../images/vessel.jpg";import IosShareIcon from "@mui/icons-material/IosShare";
-
+import React, { useState, useEffect, useRef } from "react";import { Box, Modal, Button, Alert } from "@mui/material";import api from "../../assets/api";import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";import html2canvas from "html2canvas";
+import vesselImage from "../../images/vessel.jpg";
+import IosShareIcon from "@mui/icons-material/IosShare";
 function VesselModal({ vesselId, isOpen, onClose }) {
 	const [open, setOpen] = useState(isOpen);
 	const [vesselData, setVesselData] = useState(null);
 	const [alertMessage, setAlertMessage] = useState("");
 	const [registrationIds, setRegistrationIds] = useState([]);
-	const captureRef = useRef();
+	const [expirationDates, setExpirationDates] = useState([]);
 
+	const captureRef = useRef();
 	const handleClose = () => {
 		setOpen(false);
 		if (onClose) onClose();
@@ -18,11 +20,13 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 
 	useEffect(() => {
 		if (open && vesselId) {
+			// Fetch vessel registration details
 			api
 				.get(`/api/vessel-registrationDetail/${vesselId}/`)
 				.then((response) => {
 					setVesselData(response.data);
 
+					// Fetch registration IDs
 					api
 						.get(`/api/vessel-registrations/${response.data.owner}/`)
 						.then((idResponse) => {
@@ -31,6 +35,18 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 						.catch((error) => {
 							console.error("Failed to fetch registration IDs:", error);
 						});
+
+					// Fetch expiration dates for the vessel
+					api
+						.get(`/api/expiration-dates/${vesselId}/`)
+						.then((expirationResponse) => {
+							console.log(expirationResponse.data); // This will log the expiration date response
+							setExpirationDates(expirationResponse.data);
+						})
+						.catch((error) => {
+							console.error("Failed to fetch expiration dates:", error);
+						});
+
 				})
 				.catch((error) => {
 					console.error("Failed to fetch vessel registration data:", error);
@@ -62,6 +78,46 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 			});
 		}
 	};
+
+	// Grant the vessel registration
+const grantRequest = () => {
+	// First, grant the vessel registration
+	api
+		.patch(`/api/vessel-registration/${vesselData.id}/grant/`)
+		.then((response) => {
+			setVesselData(response.data);
+			setAlertMessage("Vessel Registration has been successfully granted.");
+
+			// After granting the registration, trigger the expiration date upload
+			api
+				.post(`/api/upload-expiration-date/${vesselId}/`)
+				.then((expirationResponse) => {
+					console.log("Expiration Date successfully set:", expirationResponse.data);
+
+					// Re-fetch the expiration dates after the expiration date is set
+					api
+						.get(`/api/expiration-dates/${vesselId}/`)
+						.then((expirationResponse) => {
+							console.log("Updated expiration dates:", expirationResponse.data);
+							setExpirationDates(expirationResponse.data); // Update expiration dates state
+						})
+						.catch((error) => {
+							console.error("Failed to fetch updated expiration dates:", error);
+							setAlertMessage("An error occurred while fetching updated expiration dates.");
+						});
+				})
+				.catch((expirationError) => {
+					console.error("Failed to set expiration date:", expirationError);
+					setAlertMessage("An error occurred while setting the expiration date.");
+				});
+		})
+		.catch((error) => {
+			console.error("Failed to grant Vessel Registration:", error);
+			setAlertMessage("An error occurred while granting the registration.");
+		});
+};
+
+
 
 	return (
 		<Modal
@@ -99,7 +155,9 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 									</button>
 								))
 							) : (
-								<p className="text-green-600 font-semibold mb-4">This fisherman has submitted his/her registration first time.</p>
+								<p className="text-green-600 font-semibold mb-4">
+									This fisherman has submitted his/her registration first time.
+								</p>
 							)}
 						</div>
 						<div
@@ -137,6 +195,30 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 						</div>
 
 						<div className="mt-4">
+							<div>
+								<div>
+									{expirationDates.length > 0 ? (
+										expirationDates.map((date) => {
+											const currentDate = new Date();
+											const expirationDate = new Date(date.date_expired);
+											const timeDifference = expirationDate - currentDate;
+											const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert ms to days
+
+											return (
+												<div key={date.id}>
+													<p>Date Registered: {new Date(date.date_registered).toLocaleDateString()}</p>
+													<p>
+														Date Expired: {expirationDate.toLocaleDateString()} - 
+														{daysRemaining > 0 ? `${daysRemaining} days remaining` : "Expired"}
+													</p>
+												</div>
+											);
+										})
+									) : (
+										<p>No expiration dates available.</p>
+									)}
+								</div>
+							</div>
 							<Button
 								onClick={handleClose}
 								variant="outlined"
@@ -145,6 +227,7 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 							</Button>
 							{vesselData.status === "Pending" && (
 								<Button
+									onClick={grantRequest}
 									variant="contained"
 									sx={{
 										mt: 2,
@@ -157,18 +240,36 @@ function VesselModal({ vesselId, isOpen, onClose }) {
 								</Button>
 							)}
 							{vesselData.status === "Granted" && (
-								<Button
-									onClick={handlePrint}
-									variant="contained"
-									sx={{
-										mt: 2,
-										ml: 2,
-										backgroundColor: "blue",
-										color: "white",
-										"&:hover": { backgroundColor: "darkblue" },
-									}}>
-									<IosShareIcon className="mr-1" /> Download and Print
-								</Button>
+								<>
+									<Button
+										onClick={handlePrint}
+										variant="contained"
+										sx={{
+											mt: 2,
+											ml: 2,
+											backgroundColor: "blue",
+											color: "white",
+											"&:hover": { backgroundColor: "darkblue" },
+										}}>
+										<IosShareIcon className="mr-1" /> Download and Print
+									</Button>
+								</>
+							)}
+
+							{vesselData.status === "Granted" ? (
+								<p className="bg-green-50 rounded-lg p-4 text-green-800 w-[700px] mt-4">
+									This permit has been granted by the LGU and can therefore be used as official authorization to proceed
+									with printing.
+								</p>
+							) : null}
+
+							{alertMessage && (
+								<Alert
+									severity="success"
+									onClose={() => setAlertMessage("")}
+									sx={{ mb: 2 }}>
+									{alertMessage}
+								</Alert>
 							)}
 						</div>
 					</>

@@ -56,7 +56,7 @@ function Header({ sidebarOpen, setSidebarOpen, variant = "default", headerName }
 					{/* Header: Right side */}
 					<div className="flex items-center space-x-3">
 						<p className="text-gray-900 dark:text-white">{headerName}</p>
-						<Help align="right" />
+						
 						<ThemeToggle />
 						{/*  Divider */}
 						<hr className="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
