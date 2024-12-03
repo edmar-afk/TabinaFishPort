@@ -8,7 +8,7 @@ import PhishingIcon from "@mui/icons-material/Phishing";
 import SailingIcon from "@mui/icons-material/Sailing";
 import api from "../../assets/api";
 import FishingPermitModal from "./FishingPermitModal";
-import Swal from "sweetalert2"; // Import Swal
+import Swal from "sweetalert2";
 import VesselModal from "./VesselModal";
 
 const DashboardCard07 = ({ isListPage }) => {
@@ -45,10 +45,11 @@ const DashboardCard07 = ({ isListPage }) => {
 	useEffect(() => {
 		const fetchFishermenAndData = async () => {
 			try {
-				const response = await api.get("/api/fishermen/");
+				const apiUrl = isListPage ? "/api/fishermen/" : "/api/users/granted-status/";
+				const response = await api.get(apiUrl);
 				const fishermenData = response.data;
 				setFishermen(fishermenData);
-
+				console.log("fisherman data that has registered permits: ", fishermenData);
 				// Fetch permits and vessel registrations concurrently
 				const dataPromises = fishermenData.map(async (fisherman) => {
 					try {
@@ -115,15 +116,16 @@ const DashboardCard07 = ({ isListPage }) => {
 		}
 	};
 
-	// Step 2: Filter fishermen based on search query
 	const filteredFishermen = fishermen.filter((fisherman) =>
-		fisherman.first_name.toLowerCase().includes(searchQuery.toLowerCase())
+		(fisherman.first_name || fisherman.username || "").toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
 	return (
 		<div className="col-span-full bg-white dark:bg-gray-800 shadow-sm rounded-xl">
 			<header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex flex-row justify-between items-center flex-wrap">
-				<h2 className="font-semibold text-gray-800 dark:text-gray-100">Registered Fishermen</h2>
+				<h2 className="font-semibold text-gray-800 dark:text-gray-100">
+					{isListPage ? "Fisherman Lists" : "Fishermen Permit Granted Lists"}
+				</h2>
 
 				<div className="flex border-2 border-blue-500 overflow-hidden max-w-md">
 					<input
@@ -151,22 +153,22 @@ const DashboardCard07 = ({ isListPage }) => {
 								<th>
 									<div className="font-semibold text-center">Mobile Number</div>
 								</th>
-								{isListPage && (
-									<th className="p-2">
-										<div className="font-semibold text-center">Vessel Registration</div>
-									</th>
-								)}
 
 								<th className="p-2">
 									<div className="font-semibold text-center">
-										{isListPage ? "Fishing Permit Registration" : "Date Account Created"}
+										{isListPage ? "Vessel Registration" : "Fishing Permit"}
 									</div>
 								</th>
-								{isListPage && (
-									<th className="p-2">
-										<div className="font-semibold text-center">Action</div>
-									</th>
-								)}
+
+								<th className="p-2">
+									<div className="font-semibold text-center">
+										{isListPage ? "Fishing Permit Registration" : "Vessel Registration"}
+									</div>
+								</th>
+
+								<th className="p-2">
+									<div className="font-semibold text-center">{isListPage ? "Action" : "Account Created"}</div>
+								</th>
 							</tr>
 						</thead>
 						<tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
@@ -204,7 +206,14 @@ const DashboardCard07 = ({ isListPage }) => {
 														"No Registration"
 													)
 												) : (
-													<p>{fisherman.username}</p>
+													<span
+														className={
+															fisherman.fishing_permit_status === "Granted"
+																? "text-green-600" // green if status is 'Granted'
+																: "text-red-600" // red otherwise
+														}>
+														{fisherman.fishing_permit_status}
+													</span>
 												)}
 											</div>
 										</td>
@@ -222,24 +231,19 @@ const DashboardCard07 = ({ isListPage }) => {
 														"No Permit"
 													)
 												) : (
-													<p>
-														{new Date(fisherman.date_joined).toLocaleDateString("en-GB", {
-															day: "2-digit",
-															month: "short",
-															year: "numeric",
-														})}{" "}
-														-
-														{new Date(fisherman.date_joined).toLocaleTimeString("en-GB", {
-															hour: "2-digit",
-															minute: "2-digit",
-															hour12: true,
-														})}
-													</p>
+													<span
+														className={
+															fisherman.vessel_registration_status === "Granted"
+																? "text-green-600" // green if status is 'Granted'
+																: "text-red-600" // red otherwise
+														}>
+														{fisherman.vessel_registration_status}
+													</span>
 												)}
 											</div>
 										</td>
 										<td className="p-2 flex justify-evenly">
-											{isListPage && (
+											{isListPage ? (
 												<a
 													href="#"
 													className="text-center text-red-400 flex items-center"
@@ -250,6 +254,20 @@ const DashboardCard07 = ({ isListPage }) => {
 													/>
 													Delete
 												</a>
+											) : (
+												<p>
+													{new Date(fisherman.date_joined).toLocaleDateString("en-GB", {
+														day: "2-digit",
+														month: "short",
+														year: "numeric",
+													})}{" "}
+													-
+													{new Date(fisherman.date_joined).toLocaleTimeString("en-GB", {
+														hour: "2-digit",
+														minute: "2-digit",
+														hour12: true,
+													})}
+												</p>
 											)}
 										</td>
 									</tr>

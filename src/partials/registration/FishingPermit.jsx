@@ -1,5 +1,4 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function FishingPermit() {
@@ -176,6 +175,7 @@ function FishingPermit() {
 									className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg border-2 border-orange-700"
 									value={formData.owner_name} // Use formData.owner_name instead
 									onChange={handleChange}
+									placeholder={userData.first_name}
 									disabled
 								/>
 								<p className="text-xs text-orange-600">

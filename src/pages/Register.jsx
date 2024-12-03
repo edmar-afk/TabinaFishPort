@@ -1,9 +1,4 @@
-import React, { useState } from "react";import logo from "../images/logo.png";import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import { Link, useNavigate } from "react-router-dom";
-import api from "../assets/api";
-import CircularProgress from "@mui/material/CircularProgress";
-import Swal from "sweetalert2";
-
+import React, { useState } from "react";import logo from "../images/logo.png";import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";import { Link, useNavigate } from "react-router-dom";import api from "../assets/api";import CircularProgress from "@mui/material/CircularProgress";import Swal from "sweetalert2";
 function Register() {
 	const [formData, setFormData] = useState({
 		full_name: "",
@@ -14,8 +9,33 @@ function Register() {
 	});
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const [errors, setErrors] = useState({
+		mobile_num: "",
+	});
+
 
 	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
+
+		if (name === "mobile_num") {
+			// Validate mobile number in real-time
+			const mobileRegex = /^(09\d{9})$/;
+			if (!mobileRegex.test(value)) {
+				setErrors({
+					...errors,
+					mobile_num: "Mobile number must start with 09 and be 11 digits long.",
+				});
+			} else {
+				setErrors({
+					...errors,
+					mobile_num: "",
+				});
+			}
+		}
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,
@@ -24,6 +44,16 @@ function Register() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		// Validate mobile number
+		const mobileRegex = /^(09\d{9})$/;
+		if (!mobileRegex.test(formData.mobile_num)) {
+			setErrors({ ...errors, mobile_num: "Mobile number must start with 09 and be 11 digits long." });
+			return;
+		}
+
+		// Reset error if validation passes
+		setErrors({ ...errors, mobile_num: "" });
 
 		if (formData.password !== formData.password2) {
 			Swal.fire({
@@ -143,7 +173,9 @@ function Register() {
 									Mobile Number
 								</label>
 								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									className={`appearance-none block w-full bg-gray-200 text-gray-700 border ${
+										errors.mobile_num ? "border-red-500" : "border-gray-200"
+									} rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
 									id="mobilenumber"
 									type="number"
 									name="mobile_num"
@@ -151,6 +183,7 @@ function Register() {
 									onChange={handleChange}
 									placeholder="09123456789"
 								/>
+								{errors.mobile_num && <p className="text-red-500 text-xs italic">{errors.mobile_num}</p>}
 							</div>
 						</div>
 						<div className="flex flex-wrap -mx-3 mb-6">
@@ -194,9 +227,11 @@ function Register() {
 						<div className="flex flex-col justify-between -mx-3 mb-6">
 							<div className="flex items-center justify-between w-full mb-4">
 								<button
-									className="shadow-2xl hover:scale-110 duration-300 bg-purple-600 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded"
+									className={`shadow-2xl hover:scale-110 duration-300 ${
+										errors.mobile_num ? "bg-red-600" : "bg-purple-600"
+									} hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded`}
 									type="submit"
-									disabled={loading}>
+									disabled={loading || errors.mobile_num}>
 									Register
 								</button>
 								{loading && (

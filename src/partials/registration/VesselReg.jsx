@@ -1,5 +1,4 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 function VesselReg() {
 	const [loading, setLoading] = useState(true);
@@ -218,15 +217,19 @@ function VesselReg() {
 						</div>
 						<div>
 							<label className="text-gray-800 dark:text-white text-sm mb-0 block">Name of Vessel:</label>
-							<input
+							<select
 								name="vessel_name"
-								type="text"
 								className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
-								placeholder={userData.vessel_name}
 								value={formData.vessel_name}
-								onChange={handleChange}
-							/>
+								onChange={handleChange}>
+								<option value="Bangka">Bangka</option>
+								<option value="Pump Boat">Pump Boat</option>
+								<option value="Tapay Tapay">Tapay Tapay</option>
+								<option value="Kubkuban">Kubkuban</option>
+								<option value="Payao">Payao</option>
+							</select>
 						</div>
+
 						<div className="grid grid-cols-2 gap-6 mt-3">
 							<div className="w-full">
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Type of Service:</label>

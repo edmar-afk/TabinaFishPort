@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";
-import SailingIcon from "@mui/icons-material/Sailing";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";import SailingIcon from "@mui/icons-material/Sailing";import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import fishermanBg from "../images/fishermanbg.jpg";
 import { Link } from "react-router-dom";
 import api from "../assets/api";
@@ -84,16 +82,25 @@ function FishermanDashboard() {
 									{loadingPermit ? (
 										<p className="text-gray-300">Loading status...</p>
 									) : permitStatus && permitStatus.permit ? (
-										<p
-											className={`text-lg font-bold mb-2 ${
-												permitStatus.permit.status === "Granted" ? "text-green-500" : "text-yellow-500"
-											}`}>
-											Status: {permitStatus.permit.status || "Pending"}
-										</p>
+										<>
+											<p
+												className={`text-lg font-bold mb-2 ${
+													permitStatus.permit.status === "Granted" ? "text-green-500" : "text-yellow-500"
+												}`}>
+												Status: {permitStatus.permit.status || "Pending"}
+											</p>
+											{permitStatus.permit.status === "Granted" && (
+												<Link
+													to={"/fishingPermit-registration"}
+													className="btn-renew bg-green-700  py-1 px-4 rounded-full text-white">
+													Renew
+												</Link> // Replace with your actual button code
+											)}
+										</>
 									) : (
-										<p className="text-red-500">No permit found.</p>
+										<p className="text-red-500">No Permit registration found.</p>
 									)}
-									<p className="text-gray-300">Please fill up the form to become a certified Tabina Fisherman.</p>
+									<p className="text-gray-300 mt-2">Please fill up the form to become a certified Tabina Fisherman.</p>
 									<Link
 										to={"/fishingPermit-registration"}
 										className="text-blue-400 inline-block mt-4 hover:underline">
@@ -111,17 +118,26 @@ function FishermanDashboard() {
 									{loadingVessel ? (
 										<p className="text-gray-300">Loading status...</p>
 									) : vesselStatus && vesselStatus.vessel ? (
-										<p
-											className={`text-lg font-bold mb-2 ${
-												vesselStatus.vessel.status === "Granted" ? "text-green-500" : "text-yellow-500"
-											}`}>
-											Status: {vesselStatus.vessel.status || "Pending"}
-										</p>
+										<>
+											<p
+												className={`text-lg font-bold mb-2 ${
+													vesselStatus.vessel.status === "Granted" ? "text-green-500" : "text-yellow-500"
+												}`}>
+												Status: {vesselStatus.vessel.status || "Pending"}
+											</p>
+											{vesselStatus.vessel.status === "Granted" && (
+												<Link
+													to={"/vessel-registration"}
+													className="btn-renew bg-green-700  py-1 px-4 rounded-full text-white">
+													Renew
+												</Link> // Replace with your actual button code
+											)}
+										</>
 									) : (
 										<p className="text-red-500">No vessel registration found.</p>
 									)}
 
-									<p className="text-gray-300">Please fill up the form to become a certified Tabina Fisherman.</p>
+									<p className="text-gray-300 mt-2">Please fill up the form to become a certified Tabina Fisherman.</p>
 									<Link
 										to={"/vessel-registration"}
 										className="text-blue-400 inline-block mt-4 hover:underline">
