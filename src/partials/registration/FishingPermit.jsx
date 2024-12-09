@@ -1,4 +1,8 @@
-import logo from "../../images/logo.png";import api from "../../assets/api";import { useState, useEffect } from "react";import ArrowBackIcon from "@mui/icons-material/ArrowBack";import { Link } from "react-router-dom";
+import logo from "../../images/logo.png";
+import api from "../../assets/api";
+import { useState, useEffect } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function FishingPermit() {
@@ -67,7 +71,6 @@ function FishingPermit() {
 		}
 	}, [userData.id, userData.first_name, formData.status]);
 
-
 	// Handle input change
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -90,9 +93,9 @@ function FishingPermit() {
 				// If permit status is granted, warn the user before proceeding
 				if (permitStatus === "Granted") {
 					Swal.fire({
-						title: "Warning!",
+						title: "Notice",
 						text: 'If you proceed, the status of your fishing permit will be "Pending". Do you want to continue?',
-						icon: "warning",
+						icon: "info",
 						showCancelButton: true,
 						confirmButtonText: "Yes, proceed",
 						cancelButtonText: "No, cancel",
@@ -125,8 +128,8 @@ function FishingPermit() {
 			const response = await api.post(`/api/register-fishing-permit/${userData.id}/`, formData);
 			if (response.status === 201) {
 				Swal.fire({
-					title: "Success!",
-					text: "Fishing permit registered successfully!",
+					title: "Permit Submitted!",
+					text: "Fishing permit submitted successfully!",
 					icon: "success",
 					confirmButtonText: "OK",
 				}).then(() => {
@@ -214,15 +217,18 @@ function FishingPermit() {
 							</div>
 							<div>
 								<label className="text-gray-800 dark:text-white text-sm mb-0 block">Name of Fishing Vessel:</label>
-								<input
+
+								<select
 									name="vessel_name"
-									type="text"
-									className="bg-white dark:bg-gray-800  w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
-									placeholder=""
+									className="bg-white dark:bg-gray-800 w-full text-gray-800 dark:text-white text-sm px-2 rounded-lg"
 									value={formData.vessel_name}
-									onChange={handleChange}
-									required
-								/>
+									onChange={handleChange}>
+									<option value="Bangka">Bangka</option>
+									<option value="Pump Boat">Pump Boat</option>
+									<option value="Tapay Tapay">Tapay Tapay</option>
+									<option value="Kubkuban">Kubkuban</option>
+									<option value="Payao">Payao</option>
+								</select>
 							</div>
 						</div>
 

@@ -60,7 +60,7 @@ function ProfileModal({ userId }) {
 			<button
 				className="bg-white px-2 py-2 rounded-full"
 				onClick={handleOpen}>
-				<AssignmentIndIcon fontSize="large" />
+				View Profile
 			</button>
 			<Modal
 				open={open}

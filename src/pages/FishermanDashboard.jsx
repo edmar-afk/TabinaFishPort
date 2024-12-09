@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";import SailingIcon from "@mui/icons-material/Sailing";import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import React, { useEffect, useState } from "react";import PhishingIcon from "@mui/icons-material/Phishing";
+import SailingIcon from "@mui/icons-material/Sailing";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import fishermanBg from "../images/fishermanbg.jpg";
 import { Link } from "react-router-dom";
 import api from "../assets/api";
 import ProfileModal from "../partials/profile/ProfileModal";
+import Header from "../partials/fisherman/Header";
 function FishermanDashboard() {
 	const userData = JSON.parse(localStorage.getItem("userData"));
 	const [permitStatus, setPermitStatus] = useState(null); // State to store fishing permit status
@@ -46,18 +49,18 @@ function FishermanDashboard() {
 
 	return (
 		<>
-			<div className="absolute z-50 p-2 top-4 left-4 rounded-full flex flex-col items-center">
-				<ProfileModal userId={userData.id} />
-				<p>Profile</p>
-			</div>
 			<img
 				src={fishermanBg}
 				alt=""
 				className="fixed w-full -z-50 h-screen"
 			/>
-			<div className="bg-blue-100/40 backdrop-blur-sm text-gray-800 text-[15px] overflow-x-hidden">
+			<div className="bg-white/70 backdrop-blur-sm text-gray-800 text-[15px] overflow-x-hidden">
+				<Header
+					fishermanName={userData.first_name}
+					userId={userData.id}
+				/>
 				<div className="h-screen">
-					<div className="max-w-5xl mx-auto text-center relative px-4 sm:px-10 pt-24">
+					{/* <div className="max-w-5xl mx-auto text-center relative px-4 sm:px-10 pt-24">
 						<h1 className="lg:text-5xl md:text-3xl text-4xl font-semibold md:!leading-[80px]">
 							Welcome, {userData.first_name}. You're one step to becoming a Registered Fisherman.
 						</h1>
@@ -66,9 +69,9 @@ function FishermanDashboard() {
 							className="text-lg text-red-400 flex items-center justify-center mt-8">
 							<ExitToAppIcon className="mr-2" /> Logout
 						</Link>
-					</div>
+					</div> */}
 
-					<div className="px-4 sm:px-10 -mt-16">
+					<div className="px-4 sm:px-10 mt-24">
 						<div className="mt-32 max-w-7xl mx-auto">
 							<div className="flex flex-row flex-wrap justify-evenly mt-4">
 								{/* Fishing Permit Card */}

@@ -111,9 +111,9 @@ function VesselReg() {
 				// If the vessel status is not 'Pending', warn the user
 				if (vesselStatus !== "Pending") {
 					Swal.fire({
-						title: "Warning!",
+						title: "Notice",
 						text: 'If you proceed, the status of your vessel registration will be "Pending". Do you want to continue?',
-						icon: "warning",
+						icon: "info",
 						showCancelButton: true,
 						confirmButtonText: "Yes, proceed",
 						cancelButtonText: "No, cancel",
@@ -146,8 +146,8 @@ function VesselReg() {
 			const response = await api.post(`/api/vessel-registration/${userData.id}/`, formData);
 			if (response.status === 201) {
 				Swal.fire({
-					title: "Success!",
-					text: "Vessel registered successfully!",
+					title: "Registration Submitted",
+					text: "Vessel Registration Submitted Successfully!",
 					icon: "success",
 					confirmButtonText: "OK",
 				}).then(() => {
